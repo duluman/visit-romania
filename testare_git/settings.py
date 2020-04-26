@@ -80,7 +80,7 @@ DATABASES = {
         'PORT': 3306,
         'NAME': 'week8_db',
         'USER': 'root',
-        'PASSWORD': 'Python20'
+        'PASSWORD': 'Python20',
     }
 }
 
