@@ -72,6 +72,7 @@ WSGI_APPLICATION = 'testare_git.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
+# am actualizat databases inainte sa creez un alt branch
 
 DATABASES = {
     'default': {
