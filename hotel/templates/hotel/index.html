@@ -1,0 +1,38 @@
+
+<p>
+    Clik <a href="{% url 'hotel:create' %}"> here </a> to create a new hotel
+</p>
+
+
+<h3> This is the list of Hotels </h3>
+
+<form action="{% url 'hotel:list' %}"  method="post">
+    {% csrf_token %}
+    <label>Search by city</label>
+    <input type="text" name="search_for_city" value="{{ search_term }}">
+    <input type="submit" name="Search">
+</form>
+
+{% if search_term %}
+    <p>
+        You are serching by "{{ search_term }}.
+        Found {{hotel_list.count}} result{{hotel_list.count|pluralize}}"</p>
+{% else %}
+    <p> You are viewig all the results</p>
+{% endif %}
+
+
+<ul>
+    {% for hotel in hotel_list %}
+    <li>
+        <p> ID: {{ hotel.id }}
+            <a href="{% url 'hotel:details' hotel.id %}">View details</a>
+        </p>
+        <p> Name: {{ hotel.name }}</p>
+        <p> Location: {{ hotel.location }}</p>
+    </li>
+    {% endfor%}
+</ul>
+
+
+

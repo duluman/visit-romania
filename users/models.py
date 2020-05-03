@@ -30,7 +30,6 @@ class MyUserManager(BaseUserManager):
 
 class MyUser(AbstractUser):
     username = None
-    # email = models.EmailField(unique=True, null=False, max_length=255)
     email = models.EmailField(_('email address'), unique=True, null=False, max_length=255)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
