@@ -1,0 +1,20 @@
+
+<h3>Create object</h3>
+
+<form action="{% url 'hotel:submit' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <label>Name</label>
+        <input type="text" name="name"/>
+    </div>
+
+    <div>
+        <label>Location</label>
+        <input type="text" name="location"/>
+    </div>
+
+    <div>
+        <input type="submit" name="Submit"/>
+    </div>
+
+</form>
