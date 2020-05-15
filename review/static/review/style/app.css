@@ -1,0 +1,76 @@
+.page {
+  width: 2200px;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: #EAEDF0;
+}
+
+.menu {
+  height: 100px;
+  background-color: #B2D6FF;
+}
+
+.sidebar {
+  float: left;
+  width: 200px;
+  height: 500px;
+  background-color: #F09A9D;
+}
+
+.container {
+  overflow: hidden;
+  background-color: #EAEDF0;
+}
+
+
+.content {
+  float: left;
+  width: 2000px;
+  height: 500px;
+
+  background-color: #F5CF8E;
+}
+
+
+.article-image {
+  float: left;
+  width: 300px;
+  height: 300px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+
+.column {
+  float: left;
+  width: 31%;
+  margin: 20px 1.15%;
+  height: 160px;
+  background-color: #B2D6FF;
+}
+
+.footer {
+  clear: both;
+  height: 200px;
+  background-color: #D6E9FE;
+}
+
+
+.avatar {
+  float: left;
+  width: 150px;
+  height: 60px;
+  margin: 25px;
+  border-radius: 40px;
+  background-color: #D6E9FE;
+}
+
+.username {
+  margin-top: 30px;
+}
+
+.comment {
+  margin: 10px;
+  overflow: hidden;
+}
+

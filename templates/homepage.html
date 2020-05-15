@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>
-        {{title}}
+    <title> Home page
     </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style/app.css '%}">
 </head>
 <body>
-    <ul>
-        {% for element in custom_list %}
-        <li>
-            <div>ID: {{element.id}}</div>
-            <div>Name: {{element.name}}</div>
-            <div> Aici se repeta</div>
-        </li>
-        {% endfor %}
-    </ul>
-
+    <h1> This is h1 </h1>
+    <img src="{% static 'hotel/images/django_python.png '%}"/>
 </body>
 </html>

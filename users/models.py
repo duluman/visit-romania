@@ -27,7 +27,6 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-
 class MyUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True, null=False, max_length=255)
@@ -39,3 +38,11 @@ class MyUser(AbstractUser):
     def __str__(self):
         return self.email
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='profile_images/')
+
+
+class Homework(models.Model):
+    file = models.FileField(upload_to='homework/')

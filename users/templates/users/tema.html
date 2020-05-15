@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tema</title>
+</head>
+<body>
+
+<form method="post" action="{% url 'users:tema'  %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Incarca documentul">
+</form>
+
+
+
+</body>
+</html>

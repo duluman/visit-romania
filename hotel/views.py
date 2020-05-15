@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from hotel.models import Hotel
 from django.urls import reverse
+
 # Create your views here.
 
 
@@ -36,8 +37,11 @@ def create(request):
 
 def submit(request):
     name = request.POST['name']
+    owner = request.POST['owner']
+    room = request.POST['room']
     location = request.POST['location']
-    hotel = Hotel(name=name, location=location)
+    review = request.POST['review']
+    hotel = Hotel(name=name, owner=owner, room=room, location=location, review=review)
     hotel.save()
     return HttpResponseRedirect(reverse('hotel:list'))
 
@@ -52,8 +56,14 @@ def update(request, hotel_id):
     hotel = get_object_or_404(Hotel, pk=hotel_id)
     new_name = request.POST['name']
     new_location = request.POST['location']
+    new_owner = request.POST['owner']
+    new_room = request.POST['room']
+    new_review = request.POST['review']
     hotel.name = new_name
     hotel.location = new_location
+    hotel.owner = new_owner
+    hotel.room = new_room
+    hotel.review = new_review
     hotel.save()
     return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
 

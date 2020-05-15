@@ -26,7 +26,7 @@ SECRET_KEY = '!%c7yldacs@i5r$4(t!)6b*16ne==k-0y3+d!fx!uqws1v!vgk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'users.apps.UsersConfig',
     'users',
     'hotel.apps.HotelConfig',
+    'review.apps.ReviewConfig',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -129,5 +132,9 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.MyUser'
 
+LOGIN_URL = 'users/login'
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
+MEDIA_ROOT = 'media/'
+MEDIA_URL = '/media/'

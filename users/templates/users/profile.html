@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p> First Name: {{ user.first_name }}</p>
+<p> Last Name: {{ user.last_name }}</p>
+<p> E-mail: {{ user.email }}</p>
+
+<a href="{% url 'users:logout' %}">Logout</a>
+<br/>
+
+<img src="{{ MEDIA_URL }}{{ user.profile.avatar }}"/>
+
+
+<form method="post" action="{% url 'users:profile'  %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Change profile picture">
+</form>
+
+
+</body>
+</html>

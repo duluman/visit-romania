@@ -9,6 +9,9 @@
     <p> ID: {{ hotel.id }}</p>
     <p> Name: {{ hotel.name }}</p>
     <p> Location: {{ hotel.location }}</p>
+    <p> Owner: {{ hotel.owner }}</p>
+    <p> Room: {{ hotel.room }}</p>
+    <p> Review: {{ hotel.review }}</p>
     <a href="{% url 'hotel:list' %}">Back</a>
     <a href="{% url 'hotel:delete' hotel.id %}" style="color: red"> Delete </a>
 
@@ -23,6 +26,21 @@
         <div>
             <label>Location</label>
             <input type='text' name='location'  value='{{ hotel.location }}'/>
+        </div>
+
+        <div>
+            <label>Owner</label>
+            <input type="text" name="owner" value="{{ hotel.owner }}"/>
+        </div>
+
+        <div>
+            <label>Room</label>
+            <input type="text" name="room" value="{{ hotel.room }}"/>
+        </div>
+
+        <div>
+            <label>Review</label>
+            <input type="text" name="review" value="{{ hotel.review }}"/>
         </div>
 
         <div>

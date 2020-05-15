@@ -1,38 +1,96 @@
 
-<p>
-    Clik <a href="{% url 'hotel:create' %}"> here </a> to create a new hotel
-</p>
+<html>
+{% load static %}
+<head>
 
+    <title> Hotels </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'hotel/style/app.css '%}">
+</head>
 
-<h3> This is the list of Hotels </h3>
+<body>
 
-<form action="{% url 'hotel:list' %}"  method="post">
-    {% csrf_token %}
-    <label>Search by city</label>
-    <input type="text" name="search_for_city" value="{{ search_term }}">
-    <input type="submit" name="Search">
-</form>
-
-{% if search_term %}
-    <p>
-        You are serching by "{{ search_term }}.
-        Found {{hotel_list.count}} result{{hotel_list.count|pluralize}}"</p>
-{% else %}
-    <p> You are viewig all the results</p>
-{% endif %}
-
-
-<ul>
-    {% for hotel in hotel_list %}
-    <li>
-        <p> ID: {{ hotel.id }}
-            <a href="{% url 'hotel:details' hotel.id %}">View details</a>
-        </p>
-        <p> Name: {{ hotel.name }}</p>
-        <p> Location: {{ hotel.location }}</p>
-    </li>
-    {% endfor%}
-</ul>
+    <div class='header-container'>
+        <div class='header'>
+            <div class='subscribe'>
+                <img src="{% static 'hotel/images/logo_color.png' %}" />
+            </div>
+            <div class='logo'></div>
+        <div class='social'><img src="{% static 'hotel/images/social-icons.svg' %}"/></div>
+        </div>
+    </div>
 
 
 
+
+    <div class='menu-container'>
+        <div class='menu'>
+            <div>
+                <p>
+                    Click <a href="{% url 'hotel:create' %}"> here </a> to create a new hotel
+                </p>
+            </div>
+
+                <div class='links'>
+                    <div class='login'> <a href="{% url 'users:login' %}"> Login  </a></div>
+                    <p>  [::::] </p>
+                    <div class='signup'> <a href="{% url 'users:register' %}"> Register</a> </div>
+                </div>
+
+        </div>
+
+    </div>
+
+    <div class='menu-container'>
+        <div class='menu'>
+                <form action="{% url 'hotel:list' %}"  method="post">
+                    {% csrf_token %}
+                    <label>Search by city</label>
+                    <input type="text" name="search_for_city" value="{{ search_term }}">
+                    <input type="submit" name="Search">
+                </form>
+
+                {% if search_term %}
+                    <p>
+                        You are serching by "{{ search_term }}.
+                        Found {{hotel_list.count}} result{{hotel_list.count|pluralize}}"
+                    </p>
+                {% else %}
+                    <p> You are viewig all the results</p>
+                {% endif %}
+        </div>
+    </div>
+
+
+    <div class='photo-grid-container'>
+        {% for hotel in hotel_list %}
+            <div class='photo-grid-item'>
+                <p>
+                    ID: {{ hotel.id }}
+                    <a href="{% url 'hotel:details' hotel.id %}">View details</a>
+                </p>
+                <p> Name: {{ hotel.name }} </p>
+                <p> Location: {{ hotel.location }} </p>
+                <p> Owner: {{ hotel.owner}} </p>
+                <p> Room: {{ hotel.room}} </p>
+                <p> Review: {{ hotel.review}} </p>
+            </div>
+        {% endfor%}
+    </div>
+
+
+
+    <div class='footer'>
+        <div class='footer-item footer-one'>
+            <img src="{% static 'review/images/traveling.png '%}"  style="width: 250px; height: 250px"/>
+        </div>
+        <div class='footer-item footer-two'>
+            <h3 align="center"> This is the list of Hotels </h3>
+        </div>
+        <div class='footer-item footer-three'>
+            <img src="{% static 'review/images/traveling.png '%}"  style="width: 250px; height: 250px"/>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,3 @@
+Producator, Model, Combustibil, An
+Dacia, Sandero, Motorina, 2017
+Citroen, C4, Motorina, 2016

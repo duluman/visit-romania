@@ -1,5 +1,5 @@
 
-<h3>Create object</h3>
+<h3>Adaugare unitate cazare</h3>
 
 <form action="{% url 'hotel:submit' %}" method="post">
     {% csrf_token %}
@@ -11,6 +11,22 @@
     <div>
         <label>Location</label>
         <input type="text" name="location"/>
+    </div>
+
+    <div>
+        <label>Owner</label>
+        <input type="text" name="owner"/>
+    </div>
+
+    <div>
+        <label>Room</label>
+        <input type="text" name="room"/>
+    </div>
+
+
+    <div>
+        <label>Review</label>
+        <input type="text" name="review"/>
     </div>
 
     <div>
