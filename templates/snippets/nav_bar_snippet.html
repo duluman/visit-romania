@@ -1,0 +1,55 @@
+
+
+  <header style="margin: 10px 10px 10px 10px">
+  <!--Main Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="
+        letter-spacing: 3px ; font-weight: bold;">
+          <!-- Collapse button -->
+
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+                  <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="basicExampleNav">
+                      <!-- Links -->
+                <br><br>
+              <ul class="navbar-nav ml-4">
+                  <li class="nav-item ">
+
+                      <a class="nav-link " href="/">Home
+                          <span class="sr-only">(current)</span>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/hotel">Hotel</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/users/contact">Contact</a>
+                  </li>
+              </ul>
+              <!-- Links -->
+
+            </div>
+            <div class="navbar-nav ml-4" >
+                <div class="row">
+
+                    <a class="nav-link white-text mr-2" href="{% url 'users:logout' %}">Logout</a>
+
+                    <p class="nav-item ">
+                      <a class="nav-link white-text mr-2" href="{% url 'users:login' %}">
+                          <i class="fas fa-user white-text" aria-hidden="true"></i>Login</a>
+                    </p>
+
+                    <p class="nav-item" style="font-weight: bold">
+                      <a class="nav-link mr-4" href="{% url 'users:register' %}">
+                          <span class="badge badge-pill badge-danger" >
+                              <i class="far fa-gem ml-1 " ></i>
+                              Register</span></a>
+                    </p>
+
+                </div>
+            </div>
+        </nav>
+    </header>

@@ -84,3 +84,25 @@
   width: 300px;
 }
 
+
+.button_home {
+    color: #494949 !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #aaafff;
+    padding: 10px;
+    border: 4px solid #494949 !important;
+    display: inline-block;
+    transition: all 4s ease 0s;
+}
+
+.button_login {
+    color: #494949 !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #cccccf;
+    padding: 10px;
+    border: 4px solid #494949 !important;
+    display: inline-block;
+    transition: all 3s ease 0s;
+}

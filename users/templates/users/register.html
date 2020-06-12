@@ -1,16 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
+{% extends "home_page.html" %}
+{% load static %}
+{% block content %}
 
-    <form method="post" action="{% url 'users:register' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Register" />
-    </form>
 
-</body>
-</html>
+<div class="row">
+
+    <div class="col-lg-3 col-md-3 mb-4">
+    <div class="view overlay zoom">
+        <img src="{% static 'images/adventure_awaits.jpg'%}"
+             class="img-fluid " alt="zoom" >
+        <div class="mask flex-center waves-effect waves-light"></div>
+    </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 mb-4">
+        <br><br><br>
+        <fieldset class="form-row">
+            <form method="post" action="{% url 'users:register' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-primary mb-2" value="Register" />
+            </form>
+        </fieldset>
+    </div>
+
+    <div class="col-lg-3 col-md-3 mb-4">
+    </div>
+
+
+
+    <!--logo SIIT-->
+    <div class="col-lg-3 col-md-3 mb-4">
+    <div class="view overlay zoom">
+    <img src="{% static 'images/logo_color.png' %}" >
+    </div>
+    </div>
+
+
+</div>
+
+<!-- 3 picture down-->
+<div class="row">
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="view overlay zoom">
+        <img src="{% static 'images/barca.jpg'%}"
+             class="img-fluid " alt="zoom" >
+        <div class="mask flex-center waves-effect waves-light"></div>
+    </div>
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="view overlay zoom">
+        <img src="{% static 'images/back.jpg'%}"
+             class="img-fluid " alt="zoom" >
+        <div class="mask flex-center waves-effect waves-light"></div>
+    </div>
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="view overlay zoom">
+        <img src="{% static 'images/barca2.jpg'%}"
+             class="img-fluid " alt="zoom" >
+        <div class="mask flex-center waves-effect waves-light"></div>
+    </div>
+</div>
+
+</div>
+{% endblock content %}

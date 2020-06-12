@@ -1,27 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "home_page.html" %}
+{% load static %}
 
-<p> First Name: {{ user.first_name }}</p>
-<p> Last Name: {{ user.last_name }}</p>
-<p> E-mail: {{ user.email }}</p>
+{% block content %}
 
-<a href="{% url 'users:logout' %}">Logout</a>
-<br/>
+<div class="row">
+    <div class="col-md-4" >
+    <p> First Name: {{ user.first_name }}</p>
+    <p> Last Name: {{ user.last_name }}</p>
+    <p> E-mail: {{ user.email }}</p>
 
-<img src="{{ MEDIA_URL }}{{ user.profile.avatar }}"/>
+    <a class="btn btn-primary mb-2" href="{% url 'users:profile_email' %}">E-mail me</a>
 
+    </div>
 
-<form method="post" action="{% url 'users:profile'  %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Change profile picture">
-</form>
+    <div class="col-md-4" >
 
+        <img style="width: 400px;" src="{{ MEDIA_URL }}{{ user.profile.avatar }}"/>
 
-</body>
-</html>
+        <form method="post" action="{% url 'users:profile'  %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-green mb-2"  type="submit" value="Change profile picture">
+        </form>
+    </div>
+    <div class="col-md-4 " style="text-align:right">
+        <a class="btn btn-red mb-2"  href="{% url 'users:change_password' %}">Change password</a>
+    </div>
+</div>
+
+{% endblock content %}

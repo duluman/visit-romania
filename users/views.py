@@ -1,14 +1,16 @@
 
-
-from users.forms import MyUserCreationFrom
+from django.core.mail import EmailMultiAlternatives
+from users.admin import MyUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse
-
-from users.forms import LoginForm, UploadFileForm, UploadProfileImage, UploadTema
+from django.conf import settings
+from users.forms import LoginForm, UploadFileForm, UploadProfileImage, ContactForm, ChangePasswordForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from helpers.upload import handle_upload_file
+from django.template.loader import get_template
+# from django.contrib.sites.models import Site #v1 din register
 
 
 def handle_login(request):
@@ -54,17 +56,49 @@ def profile(request):
     return render(request, 'users/profile.html', {'form': form})
 
 
+@login_required
+def profile_email(request):
+
+    email_template = get_template('users/email.html')
+    email_content = email_template.render(
+        {
+            'your_profile': request.user.profile,
+            'your_email': request.user.email,
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+        })
+
+    mail = EmailMultiAlternatives(
+        'Your profile data request',
+        email_content,
+        settings.EMAIL_HOST_USER,
+        [request.user.email])
+
+    mail.content_subtype = 'html'
+    mail.attach_file('{BASE_DIR}/{MEDIA_ROOT}/{PROFILE_IMAGE}'.format(
+        BASE_DIR=settings.BASE_DIR,
+        MEDIA_ROOT=settings.MEDIA_ROOT,
+        PROFILE_IMAGE=request.user.profile.avatar))
+    mail.send()
+
+    return HttpResponseRedirect(reverse('users:profile'))
+
+
 def register(request):
+    # current_site = Site.objects.get_current()
+
     if request.method == 'POST':
-        form = MyUserCreationFrom(request.POST)
+        form = MyUserCreationForm(request.POST)
+
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('users:login'))
     else:
-        form = MyUserCreationFrom()
+        form = MyUserCreationForm()
 
     return render(request, 'users/register.html', {
-                       'form': form
+                        # 'host': current_site.domain,
+                        'form': form
                    })
 
 
@@ -81,12 +115,25 @@ def upload(request):
     return render(request, 'users/upload.html', {'form': form})
 
 
-def upload_tema(request):
-    if request.method == 'POST':
-        form = UploadTema(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-    else:
-        form = UploadTema()
+def contact_view(request):
+    # form = ContactForm(request.POST)
+    # if form.is_valid():
+    #     return render(request, 'users/contact.html', {'form': form})
 
-    return render(request, 'users/tema.html', {'form': form})
+    return render(request, "users/contact.html")
+
+
+@login_required
+def change_password(request):
+    form = ChangePasswordForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password']
+            confirm_password = form.cleaned_data['confirm_password']
+            password = form.cleaned_data['password']
+            if new_password == confirm_password:
+                password = confirm_password
+
+                return HttpResponseRedirect(reverse('users:profile'))
+
+    return render(request, "users/change_password.html", {'form': form})

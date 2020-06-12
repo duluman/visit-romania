@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <div>
+        <a class="button_home"  href="http://{{ request.get_host }}/hotel"> Home </a>
+    </div>
+
+    <div>
+        <a class="button_login" href="http://{{ request.get_host }}{% url 'users:login' %}">Login</a>
+    </div>
+</div>
+
+
+
+</body>
+</html>

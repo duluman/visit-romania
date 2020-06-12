@@ -1,27 +1,13 @@
-
-<html>
+{% extends "home_page.html" %}
 {% load static %}
-<head>
+<html>
 
+<head>
     <title> Hotels </title>
-    <link rel="stylesheet" type="text/css" href="{% static 'hotel/style/app.css '%}">
 </head>
 
+
 <body>
-
-    <div class='header-container'>
-        <div class='header'>
-            <div class='subscribe'>
-                <img src="{% static 'hotel/images/logo_color.png' %}" />
-            </div>
-            <div class='logo'></div>
-        <div class='social'><img src="{% static 'hotel/images/social-icons.svg' %}"/></div>
-        </div>
-    </div>
-
-
-
-
     <div class='menu-container'>
         <div class='menu'>
             <div>
@@ -29,67 +15,43 @@
                     Click <a href="{% url 'hotel:create' %}"> here </a> to create a new hotel
                 </p>
             </div>
+        </div>
 
-                <div class='links'>
-                    <div class='login'> <a href="{% url 'users:login' %}"> Login  </a></div>
-                    <p>  [::::] </p>
-                    <div class='signup'> <a href="{% url 'users:register' %}"> Register</a> </div>
+    </div>
+
+    {% block search_bar %}
+    {% endblock search_bar %}
+
+    {% block hotel%}
+        {% for hotel in hotel_list %}
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="view overlay z-depth-3-half">
+
+                    <img src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" class="img-fluid" alt="">
+                    <div class="mask rgba-white-slight"></div>
+                    <span class="badge badge-danger">
+                    Danger</span>
+                    <!-- vreau sa las utilizatorul sa puna tag: Oferta, Reducere, Last minute-->
                 </div>
 
-        </div>
-
-    </div>
-
-    <div class='menu-container'>
-        <div class='menu'>
-                <form action="{% url 'hotel:list' %}"  method="post">
-                    {% csrf_token %}
-                    <label>Search by city</label>
-                    <input type="text" name="search_for_city" value="{{ search_term }}">
-                    <input type="submit" name="Search">
-                </form>
-
-                {% if search_term %}
-                    <p>
-                        You are serching by "{{ search_term }}.
-                        Found {{hotel_list.count}} result{{hotel_list.count|pluralize}}"
-                    </p>
-                {% else %}
-                    <p> You are viewig all the results</p>
-                {% endif %}
-        </div>
-    </div>
-
-
-    <div class='photo-grid-container'>
-        {% for hotel in hotel_list %}
-            <div class='photo-grid-item'>
-                <p>
-                    ID: {{ hotel.id }}
-                    <a href="{% url 'hotel:details' hotel.id %}">View details</a>
-                </p>
-                <p> Name: {{ hotel.name }} </p>
-                <p> Location: {{ hotel.location }} </p>
-                <p> Owner: {{ hotel.owner}} </p>
-                <p> Room: {{ hotel.room}} </p>
-                <p> Review: {{ hotel.review}} </p>
+                <div>
+                    <h4 class="my-4 font-weight-bold">Name: {{ hotel.name }}</h4>
+                    <p> Location: {{ hotel.location }} </p>
+                    <p> Owner: {{ hotel.owner}} </p>
+                    <p> Room: {{ hotel.room}} </p>
+                    <p> Review: {{ hotel.review}} </p>
+                    <p class="grey-text">Descriere locatie</p>
+                </div>
+                    <a href="{% url 'hotel:details' hotel.id %}" class="btn btn-primary">
+                    View details</a>
             </div>
-        {% endfor%}
-    </div>
 
+        {% endfor %}
 
+        {% include 'snippets/legacy_snippet.html' %}
 
-    <div class='footer'>
-        <div class='footer-item footer-one'>
-            <img src="{% static 'review/images/traveling.png '%}"  style="width: 250px; height: 250px"/>
-        </div>
-        <div class='footer-item footer-two'>
-            <h3 align="center"> This is the list of Hotels </h3>
-        </div>
-        <div class='footer-item footer-three'>
-            <img src="{% static 'review/images/traveling.png '%}"  style="width: 250px; height: 250px"/>
-        </div>
-    </div>
+    {% endblock hotel%}
 
 </body>
 

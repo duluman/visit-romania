@@ -27,8 +27,8 @@ homework2()
 print("\n \n*************** \n")
 
 
-def homework3():
-    with open("testare.txt") as page:
+def homework3(file_to_open):
+    with open(file_to_open) as page:
         for line in page:
             show = line.split(", ")
             print("- " * len(line))
@@ -40,5 +40,17 @@ def homework3():
                 print("-" * 2, end=" ")
 
 
-homework3()
+homework3("testare.txt")
 print("\n \n *************** \n")
+
+homework3("saved_pass.txt")
+
+
+
+
+# (activate) C:\Users\Christian\PycharmProjects\week_8\testare_git>py manage.py createsuperuser
+# Email address: duluman89@yahoo.com
+# First name: DoDo
+# Last name: MD
+# email: duluman89@yahoo.com - password: 24reMLvFUH
+# Superuser created successfully.
