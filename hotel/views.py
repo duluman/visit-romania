@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.http import HttpResponseRedirect
-from hotel.models import Hotel
+from hotel.models import Hotel, Room
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+# from hotel.forms import  RoomForm #HotelForm
 
 # Create your views here.
 
@@ -31,41 +33,90 @@ def details(request, hotel_id):
         return render(request, "hotel/details.html", context)
 
 
+@login_required
 def create(request):
     return render(request, 'hotel/create.html')
 
 
+@login_required
 def submit(request):
     name = request.POST['name']
     owner = request.POST['owner']
-    room = request.POST['room']
+    # room = request.POST['room']
     location = request.POST['location']
     review = request.POST['review']
-    hotel = Hotel(name=name, owner=owner, room=room, location=location, review=review)
+    hotel = Hotel(name=name, owner=owner, location=location, review=review)
     hotel.save()
     return HttpResponseRedirect(reverse('hotel:list'))
 
 
-def delete(hotel_id):
+@login_required
+def delete(request, hotel_id):
+
     hotel = get_object_or_404(Hotel, pk=hotel_id)
+    print(hotel_id)
     hotel.delete()
     return HttpResponseRedirect(reverse('hotel:list'))
 
 
+@login_required
 def update(request, hotel_id):
     hotel = get_object_or_404(Hotel, pk=hotel_id)
+    print(hotel_id)
     new_name = request.POST['name']
     new_location = request.POST['location']
     new_owner = request.POST['owner']
-    new_room = request.POST['room']
     new_review = request.POST['review']
     hotel.name = new_name
     hotel.location = new_location
     hotel.owner = new_owner
-    hotel.room = new_room
     hotel.review = new_review
     hotel.save()
     return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
 
+#todo upload picture form the staff administration page
+# def upload_picture_view(request):
+#     if request.method == 'POST':
+#         form = HotelForm(request.POST, request.FILES)
+#
+#         if form.is_valid():
+#             form.save()
+#             return redirect('success')
+#     else:
+#         form = HotelForm()
+#     return render(request, 'upload.html', {'form': form})
 
 
+def success(request):
+    return HttpResponse('successfully uploaded')
+
+
+# def room_view(request, room_id):
+#     room = get_object_or_404(RoomForm, pk=room_id)
+#     # form = RoomForm(request.POST, pk=room_id)
+#     context = {'room': room}
+#     return render(request, "hotel/room.html", context)
+
+
+def room_view(request, hotel_id):
+
+    room_list = Room.objects.filter(hotel_id=hotel_id)
+
+    context = {
+        'room_list': room_list,
+        'hotel_id': hotel_id}
+    return render(request, "hotel/room.html", context)
+
+
+# def room_add(request, hotel_id):
+#     # hotel_id = hotel_id
+#     hotel_id = request.POST['hotel_id']
+#     name = request.POST['name']
+#     room_type = request.POST['room_type']
+#     bathroom = request.POST['bathroom']
+#     balcony = request.POST['balcony']
+#     # room_picture = request.POST['room_picture']
+#     room = Room(hotel_id=hotel_id, name=name, room_type=room_type, bathroom=bathroom, balcony=balcony)
+#     room.save()
+#
+#     return HttpResponseRedirect(reverse('hotel:room', hotel_id))

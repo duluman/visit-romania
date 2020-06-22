@@ -3,45 +3,42 @@
 
 {% block content%}
 
+    {% if user.is_staff %}
+    <h3>Add Hotel</h3>
 
-    <h3>Adaugare unitate cazare</h3>
-
-
-
-    <form  action="{% url 'hotel:submit' %}" method="post">
+    <form   action="{% url 'hotel:submit' %}" method="post" class="col-md-4 mb-5" >
         {% csrf_token %}
-        <div>
-            <label>Name</label>
-            <input type="text" name="name"/>
+
+        <label >Name</label>
+        <div class="col-md-4 mb-5">
+            <input type="text" name="name" />
         </div>
 
-        <div>
-            <label>Location</label>
+        <label>Location</label>
+        <div class="col-md-4 mb-5">
+
             <input type="text" name="location"/>
         </div>
 
-        <div>
-            <label>Owner</label>
+        <label>Owner</label>
+        <div class="col-md-4 mb-5">
             <input type="text" name="owner"/>
         </div>
 
-        <div>
-            <label>Room</label>
-            <input type="text" name="room"/>
-        </div>
 
-
-        <div>
-            <label>Review</label>
+        <label>Review</label>
+        <div class="col-md-4 mb-5">
             <input type="text" name="review"/>
         </div>
 
-        <div>
-            <input type="submit" name="Submit"/>
+
+            <div class="col-md-4 mb-5">
+            <input type="submit" name='Update' class="btn btn-green mt-4" value="Create">
         </div>
 
     </form>
 
+    {% endif %}
 {% endblock content%}
 
 

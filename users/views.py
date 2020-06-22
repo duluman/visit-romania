@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse
 from django.conf import settings
-from users.forms import LoginForm, UploadFileForm, UploadProfileImage, ContactForm, ChangePasswordForm
+from users.forms import LoginForm, UploadFileForm, UploadProfileImage #ContactForm, ChangePasswordForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from helpers.upload import handle_upload_file
@@ -102,6 +102,7 @@ def register(request):
                    })
 
 
+#inca nu am folosit acest view
 def upload(request):
 
     if request.method == 'POST':
@@ -123,17 +124,23 @@ def contact_view(request):
     return render(request, "users/contact.html")
 
 
-@login_required
-def change_password(request):
-    form = ChangePasswordForm(request.POST)
-    if request.method == 'POST':
-        if form.is_valid():
-            new_password = form.cleaned_data['new_password']
-            confirm_password = form.cleaned_data['confirm_password']
-            password = form.cleaned_data['password']
-            if new_password == confirm_password:
-                password = confirm_password
+# @login_required
+# def change_password(request):
+#     form = ChangePasswordForm(request.POST)
+#     if request.method == 'POST':
+#         if form.is_valid():
+#             new_password = form.cleaned_data['new_password']
+#             confirm_password = form.cleaned_data['confirm_password']
+#             # password = form.cleaned_data['password']
+#             if new_password == confirm_password:
+#                 # password = confirm_password
+#                 return HttpResponseRedirect(reverse('users:profile'))
+#
+#     return render(request, "users/change_password.html", {'form': form})
 
-                return HttpResponseRedirect(reverse('users:profile'))
-
-    return render(request, "users/change_password.html", {'form': form})
+#
+# <form method="post" action="{% url 'users:change_password'  %}">
+#                 {% csrf_token %}
+#                 {{ form.as_p }}
+#     <input type="submit" class="btn btn-primary mb-2" value="Change password" />
+# </form>

@@ -24,32 +24,55 @@
 
     {% block hotel%}
         {% for hotel in hotel_list %}
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-4 mb-2">
 
                 <div class="view overlay z-depth-3-half">
 
-                    <img src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" class="img-fluid" alt="">
-                    <div class="mask rgba-white-slight"></div>
-                    <span class="badge badge-danger">
-                    Danger</span>
+                    {% if hotel.hotel_picture %}
+
+                        <img src="{{ MEDIA_URL }}{{ hotel.hotel_picture }}" class="img-fluid" alt=""/>
+                        <div class="mask rgba-white-slight"></div>
+
+                    {% else %}
+
+                        <img src="https://www.romaniaexperience.com/wp-content/uploads/2015/02/06-arena-regia.jpg"
+                             class="img-fluid" alt="">
+                        <div class="mask rgba-white-slight"></div>
+
+                    {% endif %}
+
+                    <span class="badge badge-danger">Danger</span>
+                    <span class="badge success-color">
+                        <i class="fas fa-plane pr-2" aria-hidden="true"></i>Nature</span>
+
+
                     <!-- vreau sa las utilizatorul sa puna tag: Oferta, Reducere, Last minute-->
                 </div>
+
+
 
                 <div>
                     <h4 class="my-4 font-weight-bold">Name: {{ hotel.name }}</h4>
                     <p> Location: {{ hotel.location }} </p>
-                    <p> Owner: {{ hotel.owner}} </p>
-                    <p> Room: {{ hotel.room}} </p>
-                    <p> Review: {{ hotel.review}} </p>
+                    <p> Owner: {{ hotel.owner }} </p>
+
+                    <p> Review: {{ hotel.review }} </p>
                     <p class="grey-text">Descriere locatie</p>
                 </div>
-                    <a href="{% url 'hotel:details' hotel.id %}" class="btn btn-primary">
-                    View details</a>
+                    <div  class="container-fluid d-flex align-items-center justify-content-center">
+                        <a href="{% url 'hotel:details' hotel.id %}" class="btn btn-primary">
+                            View details</a>
+
+                        <a class="button"  href="{% url 'hotel:room' hotel.id  %}">
+
+                        <h4>  <i class="fas fa-star mr-1 " ></i> View Rooms </h4></a>
+                        <br>
+                    </div>
             </div>
 
         {% endfor %}
 
-        {% include 'snippets/legacy_snippet.html' %}
+
 
     {% endblock hotel%}
 

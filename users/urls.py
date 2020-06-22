@@ -4,8 +4,8 @@ from users.views import (register, profile,
                          handle_logout,
                          upload,
                          profile_email,
-                         contact_view,
-                         change_password)
+                         contact_view, #change_password
+                         )
 
 from django.contrib.auth import views as auth_views
 
@@ -19,8 +19,8 @@ urlpatterns = [
     path('contact/', view=contact_view, name='contact'),
     path('profile/', view=profile, name='profile'),
     path('profile/email', view=profile_email, name='profile_email'),
-    path('change_password/', view=change_password, name='change_password'),
-    path('upload/', view=upload, name='upload'),]
+    # path('change_password/', view=change_password, name='change_password'),
+    path('upload/', view=upload, name='upload')]
     # path('password_change/done/',
     #      auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html'),
     #      name='password_change_done'),

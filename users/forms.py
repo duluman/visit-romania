@@ -154,47 +154,47 @@ class ContactForm(forms.Form):
     message = forms.CharField(required=True, min_length=30, max_length=1000, label='Your message')
 
 
-class ChangePasswordForm(forms.Form):
-    password = forms.CharField(
-        required=True,
-        max_length=255,
-        label='Current Password',
-        widget=forms.PasswordInput)
-
-    new_password = forms.CharField(
-        required=True,
-        max_length=23,
-        label='New Password',
-        widget=forms.PasswordInput)
-    confirm_password = forms.CharField(
-        required=True,
-        max_length=23,
-        label='Confirm password',
-        widget=forms.PasswordInput)
-
-    def __init__(self, user, *args, **kwargs):
-        self.user = user
-        super().__init__()
-
-    def clean_password_confirm(self):
-
-        new_password = self.cleaned_data['new_password']
-        confirm_password = self.cleaned_data['confirm_password']
-
-        if confirm_password != new_password:
-            raise forms.ValidationError("Password confirm doesn't match")
-
-        password_validation.validate_password(confirm_password, self.user)
-        password = confirm_password
-        return password
-
-    def save(self, commit=True):
-
-        password = self.cleaned_data['password']
-        self.user.set_password(password)
-        print("****" * 8)
-        print(password)
-        print("****" * 8)
-        if commit:
-            self.user.save(password=password)
-        return self.user
+# class ChangePasswordForm(forms.Form):
+#     password = forms.CharField(
+#         required=True,
+#         max_length=255,
+#         label='Current Password',
+#         widget=forms.PasswordInput)
+#
+#     new_password = forms.CharField(
+#         required=True,
+#         max_length=23,
+#         label='New Password',
+#         widget=forms.PasswordInput)
+#     confirm_password = forms.CharField(
+#         required=True,
+#         max_length=23,
+#         label='Confirm password',
+#         widget=forms.PasswordInput)
+#
+#     def __init__(self, user, *args, **kwargs):
+#         self.user = user
+#         super().__init__()
+#
+#     def clean_password_confirm(self):
+#
+#         new_password = self.cleaned_data['new_password']
+#         confirm_password = self.cleaned_data['confirm_password']
+#
+#         if confirm_password != new_password:
+#             raise forms.ValidationError("Password confirm doesn't match")
+#
+#         password_validation.validate_password(confirm_password, self.user)
+#         password = confirm_password
+#         return password
+#
+#     def save(self, commit=True):
+#
+#         password = self.cleaned_data['password']
+#         self.user.set_password(password)
+#         print("****" * 8)
+#         print(password)
+#         print("****" * 8)
+#         if commit:
+#             self.user.save(password=password)
+#         return self.user

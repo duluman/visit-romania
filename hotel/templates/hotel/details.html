@@ -3,19 +3,73 @@
 
 {% block content%}
 
-<!--Section: For the custormer and owner-->
+<!--Section: For the customer and owner-->
+<div class="row">
+    <div class="col-md-4 mb-5">
+    <h3> Details of the Hotel </h3>
 
-    <h3> Details of {{hotel.id}} </h3>
-    <!--<p> ID: {{ hotel.id }}</p>-->
     <p> Name: {{ hotel.name }}</p>
     <p> Location: {{ hotel.location }}</p>
     <p> Owner: {{ hotel.owner }}</p>
-    <p> Room: {{ hotel.room }}</p>
+    <p>                         </p>
     <p> Review: {{ hotel.review }}</p>
+    {% if user.is_staff %}
+        <div>
+            <a href="{% url 'hotel:delete' hotel.id %}" class="btn btn-red mt-3 mb-4"> Delete </a>
+        </div>
+
+    </div>
+<!--Section: For the customer and owner-->
+
+    <div class="col-md-8 mb-3">
+        <!--Section: For the owner-->
+
+        <div class="row" style="color:green">
+            <div class="col-lg-2 col-md-2 mb-4">
+            <form action="{% url 'hotel:update' hotel.id %}" method="post" >
+                {% csrf_token %}
+                <div class="col-md-4 mb-3">
+                    <label >Name</label>
+                    <input type="text" name="name" value="{{ hotel.name }}"/>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Location</label>
+                    <input type='text' name='location'  value='{{ hotel.location }}'/>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Owner</label>
+                    <input type="text" name="owner" value="{{ hotel.owner }}"/>
+                </div>
 
 
 
-<!--Section: For the custormer and owner-->
+                <div class="col-md-4 mb-3">
+                    <label>Review</label>
+                    <input type="text" name="review" value="{{ hotel.review }}"/>
+                </div>
+
+                <div class="col-md-4 mb-3 ml-4">
+                    <input type="submit" name="update" value="update" class="btn btn-green mt-4"/>
+                </div>
+
+                </form>
+                </div>
+
+        </div>
+        {% endif %}
+<!--Section: For the owner-->
+    </div>
+
+
+</div>
+
+<div class="text-center">
+    <a class="button"  href="{% url 'hotel:room' hotel.id  %}">
+    <h1>  <i class="fas fa-star mr-1 " ></i> View Rooms </h1></a>
+    <br>
+</div>
 
 <!--Section: Best Features-->
             <section id="best-features" class="text-center">
@@ -90,48 +144,5 @@
 
 
 
-<!--Section: For the owner-->
-<div class="row" >
-    <div class="col-lg-2 col-md-2 mb-4">
-    <form action="{% url 'hotel:update' hotel.id %}" method="post" >
-        {% csrf_token %}
-        <div>
-            <label>Name</label>
-            <input type="text" name="name" value="{{ hotel.name }}"/>
-        </div>
 
-        <div>
-            <label>Location</label>
-            <input type='text' name='location'  value='{{ hotel.location }}'/>
-        </div>
-
-        <div>
-            <label>Owner</label>
-            <input type="text" name="owner" value="{{ hotel.owner }}"/>
-        </div>
-
-        <div>
-            <label>Room</label>
-            <input type="text" name="room" value="{{ hotel.room }}"/>
-        </div>
-
-        <div>
-            <label>Review</label>
-            <input type="text" name="review" value="{{ hotel.review }}"/>
-        </div>
-
-        </form>
-        </div>
-
-        <div class="col-lg-4 col-md-2 mb-4">
-
-        <div>
-            <a href="{% url 'hotel:delete' hotel.id %}" class="btn btn-red mt-3 mb-4"> Delete </a>
-        </div>
-            <div>
-            <input type="submit" name='Update' class="btn btn-green mt-4" value="Update">
-        </div>
-        </div>
-</div>
-<!--Section: For the owner-->
 {% endblock content %}

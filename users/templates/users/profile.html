@@ -15,7 +15,13 @@
 
     <div class="col-md-4" >
 
-        <img style="width: 400px;" src="{{ MEDIA_URL }}{{ user.profile.avatar }}"/>
+        {% if user.profile.avatar %}
+            <img style="width: 400px;" src="{{ MEDIA_URL }}{{ user.profile.avatar }}"/>
+        {% else %}
+            <img style="width: 400px;" src="https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"/>
+        {% endif %}
+
+
 
         <form method="post" action="{% url 'users:profile'  %}" enctype="multipart/form-data">
             {% csrf_token %}
@@ -24,7 +30,7 @@
         </form>
     </div>
     <div class="col-md-4 " style="text-align:right">
-        <a class="btn btn-red mb-2"  href="{% url 'users:change_password' %}">Change password</a>
+        <a class="btn btn-red mb-2"  href="{% url 'users:profile' %}">Change password</a>
     </div>
 </div>
 
