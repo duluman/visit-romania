@@ -1,0 +1,37 @@
+{% extends "home_page.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4" >
+    <p> First Name: {{ user.first_name }}</p>
+    <p> Last Name: {{ user.last_name }}</p>
+    <p> E-mail: {{ user.email }}</p>
+
+    <a class="btn btn-primary mb-2" href="{% url 'users:profile_email' %}">E-mail me</a>
+
+    </div>
+
+    <div class="col-md-4" >
+
+        {% if user.profile.avatar %}
+            <img style="width: 400px;" src="{{ MEDIA_URL }}{{ user.profile.avatar }}"/>
+        {% else %}
+            <img style="width: 400px;" src="https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"/>
+        {% endif %}
+
+
+
+        <form method="post" action="{% url 'users:profile'  %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-green mb-2"  type="submit" value="Change profile picture">
+        </form>
+    </div>
+    <div class="col-md-4 " style="text-align:right">
+        <a class="btn btn-red mb-2"  href="{% url 'users:profile' %}">Change password</a>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,33 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Details</title>
-</head>
-<body>
-    <h3> Details of {{hotel.id}} </h3>
-    <p> ID: {{ hotel.id }}</p>
+{% extends "home_page.html" %}
+{% load static %}
+
+{% block content%}
+
+<!--Section: For the customer and owner-->
+<div class="row">
+    <div class="col-md-4 mb-5">
+    <h3> Details of the Hotel </h3>
+
     <p> Name: {{ hotel.name }}</p>
     <p> Location: {{ hotel.location }}</p>
-    <a href="{% url 'hotel:list' %}">Back</a>
-    <a href="{% url 'hotel:delete' hotel.id %}" style="color: red"> Delete </a>
-
-    <h3> Update </h3>
-    <form action="{% url 'hotel:update' hotel.id %}" method="post">
-        {% csrf_token %}
+    <p> Owner: {{ hotel.owner }}</p>
+    <p>                         </p>
+    <p> Review: {{ hotel.review }}</p>
+    {% if user.is_staff %}
         <div>
-            <label>Name</label>
-            <input type="text" name="name" value="{{ hotel.name }}"/>
+            <a href="{% url 'hotel:delete' hotel.id %}" class="btn btn-red mt-3 mb-4"> Delete </a>
         </div>
 
-        <div>
-            <label>Location</label>
-            <input type='text' name='location'  value='{{ hotel.location }}'/>
-        </div>
+    </div>
+<!--Section: For the customer and owner-->
 
-        <div>
-            <input type='submit' name='Update' />
+    <div class="col-md-8 mb-3">
+        <!--Section: For the owner-->
+
+        <div class="row" style="color:green">
+            <div class="col-lg-2 col-md-2 mb-4">
+            <form action="{% url 'hotel:update' hotel.id %}" method="post" >
+                {% csrf_token %}
+                <div class="col-md-4 mb-3">
+                    <label >Name</label>
+                    <input type="text" name="name" value="{{ hotel.name }}"/>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Location</label>
+                    <input type='text' name='location'  value='{{ hotel.location }}'/>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Owner</label>
+                    <input type="text" name="owner" value="{{ hotel.owner }}"/>
+                </div>
+
+
+
+                <div class="col-md-4 mb-3">
+                    <label>Review</label>
+                    <input type="text" name="review" value="{{ hotel.review }}"/>
+                </div>
+
+                <div class="col-md-4 mb-3 ml-4">
+                    <input type="submit" name="update" value="update" class="btn btn-green mt-4"/>
+                </div>
+
+                </form>
+                </div>
+
         </div>
-    </form>
-</body>
-</html>
+        {% endif %}
+<!--Section: For the owner-->
+    </div>
+
+
+</div>
+
+<div class="text-center">
+    <a class="button"  href="{% url 'hotel:room' hotel.id  %}">
+    <h1>  <i class="fas fa-star mr-1 " ></i> View Rooms </h1></a>
+    <br>
+</div>
+
+<!--Section: Best Features-->
+            <section id="best-features" class="text-center">
+
+                <!-- Heading -->
+                <h2 class="mb-5 font-weight-bold">Best Features</h2>
+
+                <!--Grid row-->
+                <div class="row d-flex justify-content-center mb-4">
+
+                    <!--Grid column-->
+                    <div class="col-md-8">
+
+                        <!-- Description -->
+                        <p class="grey-text">Traveling is an extraordinary experience every person needs to try.
+                            It reveals a whole new and exciting world out there, opens out your inner strength,
+                            and presents with unforgettable adventures.</p>
+
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-4 mb-5">
+                        <i class="fa fa-camera-retro fa-4x primary-text"></i>
+                        <h4 class="my-4 font-weight-bold">Experience</h4>
+                        <p class="grey-text">Traveling is a humbling experience. It is merely a superior feeling:
+                            to go to another country, and to see people live differently, speak differently, look
+                            differently. This is how one comes to understand how big and crazy our world is.</p>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-md-4 mb-1">
+                        <i class="fa fa-heart fa-4x red-text"></i>
+                        <h4 class="my-4 font-weight-bold">Happiness</h4>
+                        <p class="grey-text">Dragobete is the Guardian of Love in Romania who also signifies the arrival
+                            of spring on 24 February. Young men and women put on their best clothes and go out in groups,
+                            searching for spring flowers to make love spells. In Southern Romania, there is a game called
+                            ‘racer’ where the girls run down to the village with the boys chasing after them. If a boy
+                            catches a girl that he likes, he can kiss her openly. The kiss is a playful display of
+                            engagement between the two, though often such engagements become real.</p>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-md-4 mb-1">
+                        <i class="fa fa-bicycle fa-4x green-text"></i>
+                        <h4 class="my-4 font-weight-bold">Adventure</h4>
+                        <p class="grey-text"> You can’t help but consider the mineral waters at the Herculane Baths in
+                            Caraş-Severin county of Banat to be magical – after all, they were dedicated to the mythical
+                            Greek-Roman hero-god Hercules. It is even believed that Hercules once came here and soaked
+                            in these waters. This historical spa was built by the Romans during their invasion of the
+                            Dacian territories, and the salutary effects of its waters continue to attract tourists
+                            from all over the world. Situated on an ancient volcanic fissure, the bath’s highly
+                            sulphurous waters are said to increase the body’s resistance to diseases, and if that
+                            doesn’t impress you, the magnificent surrounding views of Cerna River Valley certainly will.</p>
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+            </section>
+            <!--Section: Best Features-->
+
+
+
+
+
+{% endblock content %}

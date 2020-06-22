@@ -1,38 +1,81 @@
+{% extends "home_page.html" %}
+{% load static %}
+<html>
 
-<p>
-    Clik <a href="{% url 'hotel:create' %}"> here </a> to create a new hotel
-</p>
-
-
-<h3> This is the list of Hotels </h3>
-
-<form action="{% url 'hotel:list' %}"  method="post">
-    {% csrf_token %}
-    <label>Search by city</label>
-    <input type="text" name="search_for_city" value="{{ search_term }}">
-    <input type="submit" name="Search">
-</form>
-
-{% if search_term %}
-    <p>
-        You are serching by "{{ search_term }}.
-        Found {{hotel_list.count}} result{{hotel_list.count|pluralize}}"</p>
-{% else %}
-    <p> You are viewig all the results</p>
-{% endif %}
+<head>
+    <title> Hotels </title>
+</head>
 
 
-<ul>
-    {% for hotel in hotel_list %}
-    <li>
-        <p> ID: {{ hotel.id }}
-            <a href="{% url 'hotel:details' hotel.id %}">View details</a>
-        </p>
-        <p> Name: {{ hotel.name }}</p>
-        <p> Location: {{ hotel.location }}</p>
-    </li>
-    {% endfor%}
-</ul>
+<body>
+    <div class='menu-container'>
+        <div class='menu'>
+            <div>
+                <p>
+                    Click <a href="{% url 'hotel:create' %}"> here </a> to create a new hotel
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    {% block search_bar %}
+    {% endblock search_bar %}
+
+    {% block hotel%}
+        {% for hotel in hotel_list %}
+            <div class="col-lg-4 col-md-4 mb-2">
+
+                <div class="view overlay z-depth-3-half">
+
+                    {% if hotel.hotel_picture %}
+
+                        <img src="{{ MEDIA_URL }}{{ hotel.hotel_picture }}" class="img-fluid" alt=""/>
+                        <div class="mask rgba-white-slight"></div>
+
+                    {% else %}
+
+                        <img src="https://www.romaniaexperience.com/wp-content/uploads/2015/02/06-arena-regia.jpg"
+                             class="img-fluid" alt="">
+                        <div class="mask rgba-white-slight"></div>
+
+                    {% endif %}
+
+                    <span class="badge badge-danger">Danger</span>
+                    <span class="badge success-color">
+                        <i class="fas fa-plane pr-2" aria-hidden="true"></i>Nature</span>
+
+
+                    <!-- vreau sa las utilizatorul sa puna tag: Oferta, Reducere, Last minute-->
+                </div>
 
 
 
+                <div>
+                    <h4 class="my-4 font-weight-bold">Name: {{ hotel.name }}</h4>
+                    <p> Location: {{ hotel.location }} </p>
+                    <p> Owner: {{ hotel.owner }} </p>
+
+                    <p> Review: {{ hotel.review }} </p>
+                    <p class="grey-text">Descriere locatie</p>
+                </div>
+                    <div  class="container-fluid d-flex align-items-center justify-content-center">
+                        <a href="{% url 'hotel:details' hotel.id %}" class="btn btn-primary">
+                            View details</a>
+
+                        <a class="button"  href="{% url 'hotel:room' hotel.id  %}">
+
+                        <h4>  <i class="fas fa-star mr-1 " ></i> View Rooms </h4></a>
+                        <br>
+                    </div>
+            </div>
+
+        {% endfor %}
+
+
+
+    {% endblock hotel%}
+
+</body>
+
+</html>

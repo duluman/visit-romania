@@ -1,0 +1,5 @@
+Marca, Model, Combustibil, An
+Dacia, Sandero, Benzina, 2016
+Citroen, C4, Motorina, 2006
+Ford, Mondeo, Motorina, 2011
+VW, Polo, Benzina, 2009

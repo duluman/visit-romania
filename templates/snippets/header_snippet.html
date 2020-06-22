@@ -1,0 +1,63 @@
+
+{% load static %}
+<div class="row">
+        <!--Grid column-->
+    <div class="col-md-6">
+      <div class="view overlay z-depth-1-half">
+          <img src="https://immigrationlawyer.ro/wp-content/uploads/2019/03/poza-faina-Ro.jpg" class="card-img-top" alt="">
+          <div class="mask rgba-white-light"></div>
+      </div>
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-md-3">
+        <br>
+        <h2>Visit Romania</h2>
+        <hr>
+        <p style="text-align:justify">
+            Romania is a beautiful country located in Europe. It is well known that Romania has a
+            good natural environment, here the nature has preserved itself very well and for this
+            reason, it is a country where you can discover new beautiful landscapes, all the time.</p>
+        <a href="/read_more" class="btn btn-primary">Read more ...</a>
+
+    </div>
+    <!--Grid column-->
+
+
+    <div class="col-md-3">
+    <br>
+    <div class="row"><h2>Looking for a location? </h2></div>
+    <br>
+
+    <div>
+     <form class="form-inline" action="{% url 'hotel:list' %}"  method="post">
+         {% csrf_token %}
+          <div class="md-form my-0">
+              <input type="text" name="search_for_city" value="{{ search_term }}"
+                     placeholder="Search by location">
+              <!--<input type="submit"  class="btn btn-primary" name="Go">-->
+              <button type="submit" class="btn btn-primary">Go</button>
+
+
+          </div>
+     </form>
+        {% if search_term %}
+
+            <p>
+                You are serching by "{{ search_term }}.
+                <br>
+                Found {{hotel_list.count}} result{{hotel_list.count|pluralize}}"
+            </p>
+            <br>
+            <h2  class="text-center">Nice search</h2>
+        {% else %}
+
+            <p> You are viewig all the results</p>
+            <br>
+            <h2  class="text-center">Stunning Places</h2>
+        {% endif %}
+        </div>
+
+    </div>
+</div>

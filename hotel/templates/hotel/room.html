@@ -1,0 +1,48 @@
+{% extends "home_page.html" %}
+{% load static %}
+{% block content%}
+
+<div class="row">
+    {% for room in room_list %}
+    <div class="col-lg-4 col-md-4 mb-5 mt-5">
+    <p> Room name: {{ room.name }}</p>
+    <p> Room type: {{ room.room_type }}</p>
+    <p> Bathroom:
+        {% if room.bathroom %}
+        Yes
+        {% else %}
+        No
+        {% endif %}
+
+    </p>
+
+    <p> Balcony:
+        {% if room.balcony %}
+        Yes
+        {% else %}
+        No
+        {% endif %}
+
+    </p>
+
+    <div class="view overlay z-depth-3-half" >
+        {% if room.room_picture %}
+        <img src="{{ MEDIA_URL }}{{ room.room_picture }}" class="img-fluid" alt=""/>
+
+        {% else %}
+        <img src="https://www.thesun.co.uk/wp-content/uploads/2019/05/NINTCHDBPICT0004902924971.jpg?w=940" class="img-fluid" alt="The Sun"/>
+        {% endif %}
+        <div class="mask rgba-white-slight"></div>
+    </div>
+        <div class="container-fluid d-flex align-items-center justify-content-center">
+            <input class="btn btn-green mb-2"  type="submit" value="Reserve it now!">
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock content %}
