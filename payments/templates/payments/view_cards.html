@@ -1,0 +1,42 @@
+{% extends "home_page.html" %}
+
+{% block content %}
+
+{% if cards %}
+
+
+    <div class="row">
+
+        <div class="col-md-2 mb-3">
+            <a  href="{% url 'payments:add_card' %}" class="btn btn-green mt-4">Add new CARD</a>
+
+
+        </div>
+        {% for card in cards %}
+             <div class="col-md-2 mb-3">
+
+            <p> Card brand: {{ card.brand }} </p>
+            <p> **** **** **** {{ card.last4 }} </p>
+            <p> Expiration date: {{ card.exp_month }} {{ card.exp_year }} </p>
+            <form method="post" action="{% url 'payments:delete_card' card.id %}">
+                {% csrf_token %}
+                <input type="submit" value="Delete" class="btn btn-red mt-3 mb-4">
+            </form>
+             </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+{% else %}
+    <p> No cards registered yet.
+
+        <a href="{% url 'payments:add_card' %}"  class="btn btn-green mt-4" >Add CARD</a>
+
+    </p>
+
+{% endif %}
+
+{% endblock content%}

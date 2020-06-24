@@ -19,6 +19,11 @@ from testare_git.views import home_page, read_more
 from django.conf import settings
 from django.conf.urls.static import static
 
+# you can change the header am title form de admin page
+admin.site.site_header = " Visit Romania Admin"
+admin.site.site_title = " Admin "
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', view=home_page),
@@ -27,6 +32,6 @@ urlpatterns = [
     path('review/', include("review.urls")),
     path('users/', include("users.urls")),
     path('users/activate/', include("activation.urls")),
-    path('social-auth/', include('social_django.urls', namespace='social'))
-
+    path('social-auth/', include('social_django.urls', namespace='social')),
+    path('payments/', include("payments.urls"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

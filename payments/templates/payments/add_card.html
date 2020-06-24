@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'payments/stripeCardElement.css' %}">
+    <title>Add Card Page</title>
+</head>
+<body>
+
+
+
+<h1>   Add card </h1>
+
+
+<form action="{% url 'payments:add_card' %}" method="post" id="payment-form">
+    {% csrf_token %}
+
+  <div class="form-row">
+    <label for="card-element">
+      Payment method form
+    </label>
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display form errors. -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+
+  <button>Add new card</button>
+</form>
+
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src=" {% static 'payments/stripeCardElement.js'  %}" stripeKey="{{ stripe_key }}"></script>
+
+</body>
+
+</html>

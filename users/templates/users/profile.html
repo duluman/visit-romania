@@ -11,6 +11,11 @@
 
     <a class="btn btn-primary mb-2" href="{% url 'users:profile_email' %}">E-mail me</a>
 
+    <br>
+        <br>
+        {% if request.user.stripe_data.customer_id  %}
+    <a class="btn btn mb-2" href="{% url 'payments:view_cards' %}">My cards</a>
+        {% endif %}
     </div>
 
     <div class="col-md-4" >

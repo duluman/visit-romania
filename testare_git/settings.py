@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'social_django',
     'activation',
     'crispy_forms',
+    'payments',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -159,7 +160,7 @@ EMAIL_PORT = config('EMAIL_PORT', 587)
 SITE_ID = 1
 
 
-#social authentication
+# social authentication
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
@@ -194,3 +195,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
+
+# payment with stripe
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')# call from app
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY')# call from browser
