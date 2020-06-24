@@ -32,8 +32,18 @@
 <div class="col-md-2" >
 </div>
 <div class="col-md-5" >
- <img src=" {% static 'images/r_map.jpg' %}">
+    <br>
+    <div class="d-flex align-items-stretch">
+
+ <img  src=" {% static 'images/r_map.jpg' %}">
 </div>
+    </div>
 </div>
+
+   <div class="row" >
+
+        {% include 'snippets/youtube_snippet.html' %}
+
+    </div>
 
 {% endblock content%}
