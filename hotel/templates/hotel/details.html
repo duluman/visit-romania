@@ -5,7 +5,7 @@
 
 <!--Section: For the customer and owner-->
 <div class="row">
-    <div class="col-md-4 mb-5">
+    <div class="col-lg-4 col-md-4 mb-2">
     <h3> Details of the Hotel </h3>
 
     <p> Name: {{ hotel.name }}</p>
@@ -21,7 +21,7 @@
     </div>
 <!--Section: For the customer and owner-->
 
-    <div class="col-md-8 mb-3">
+    <div class="col-lg-4 col-md-4 mb-2">
         <!--Section: For the owner-->
 
         <div class="row" style="color:green">
@@ -43,7 +43,10 @@
                     <input type="text" name="owner" value="{{ hotel.owner }}"/>
                 </div>
 
-
+                <div class="col-md-4 mb-3">
+                    <label>Youtube</label>
+                    <input type="text" name="youtube_video" value="{{ hotel.youtube_video }}"/>
+                </div>
 
                 <div class="col-md-4 mb-3">
                     <label>Review</label>
@@ -60,9 +63,24 @@
         </div>
         {% endif %}
 <!--Section: For the owner-->
+
     </div>
+    <!--Section: Youtube Video-->
+    <div class="col-lg-4 col-md-4 mb-2">
 
+            <div class="embed-responsive embed-responsive-16by9">
+                {% if hotel.youtube_video %}
+                    <iframe class="embed-responsive-item"  src="https://www.youtube.com/embed/{{ hotel.youtube_video }}"  allowfullscreen>
+                    </iframe>
+                {% else %}
+                    <iframe class="embed-responsive-item"  src="https://www.youtube.com/embed/Qyca2RB9Kek"  allowfullscreen>
+                    </iframe>
+                {% endif %}
 
+            </div>
+
+    </div>
+    <!--Section: Youtube Video-->
 </div>
 
 <div class="text-center">

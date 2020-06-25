@@ -4,6 +4,7 @@ import stripe
 from django.contrib.auth.decorators import login_required
 from payments.models import StripeCard
 from django.contrib.sites.models import Site
+
 # Create your views here.
 
 
