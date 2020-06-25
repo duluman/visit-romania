@@ -8,6 +8,7 @@ class Hotel(models.Model):
     owner = models.CharField(max_length=255, default=None)
     review = models.CharField(max_length=1000, default=None)
     hotel_picture = models.ImageField(upload_to='hotel_picture/', blank=True, null=True)
+    youtube_video = models.CharField(max_length=255, default=None)
 
     def __str__(self):
         return self.name
@@ -20,6 +21,7 @@ class Room(models.Model):
     bathroom = models.BooleanField(default=True)
     balcony = models.BooleanField(default=False)
     room_picture = models.ImageField(upload_to='room_picture/', blank=True, null=True)
+    room_youtube_video = models.CharField(max_length=255, default=None)
 
     def __str__(self):
         return self.name

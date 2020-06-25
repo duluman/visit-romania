@@ -2,9 +2,11 @@
 {% load static %}
 {% block content%}
 
-<div class="row">
+<div class="row align-items-center">
     {% for room in room_list %}
-    <div class="col-lg-4 col-md-4 mb-5 mt-5">
+    <div class="col-md-auto">
+        <br>
+        <h1>*****************</h1>
     <p> Room name: {{ room.name }}</p>
     <p> Room type: {{ room.room_type }}</p>
     <p> Bathroom:
@@ -25,7 +27,7 @@
 
     </p>
 
-    <div class="view overlay z-depth-3-half" >
+    <div  >
         {% if room.room_picture %}
         <img src="{{ MEDIA_URL }}{{ room.room_picture }}" class="img-fluid" alt=""/>
 
@@ -37,6 +39,29 @@
         <div class="container-fluid d-flex align-items-center justify-content-center">
             <input class="btn btn-green mb-2"  type="submit" value="Reserve it now!">
         </div>
+
+
+    <!--Section: Youtube Video-->
+
+    <div class="embed-responsive embed-responsive-16by9">
+        <!--If we have a video uploaded for the room we show that one, else we verify if the hotel
+        has a youtube video uploaded -->
+        {% if room.room_youtube_video %}
+            <iframe class="embed-responsive-item"  src="https://www.youtube.com/embed/{{ room.room_youtube_video }}"  allowfullscreen>
+            </iframe>
+        {% else %}
+            {% if hotel.youtube_video %}
+              <iframe class="embed-responsive-item"  src="https://www.youtube.com/embed/{{ hotel.youtube_video }}"  allowfullscreen>
+              </iframe>
+            {% else  %}
+              <iframe class="embed-responsive-item"  src="https://www.youtube.com/embed/Qyca2RB9Kek"  allowfullscreen>
+              </iframe>
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+    <!--Section: Youtube Video-->
 
     </div>
 

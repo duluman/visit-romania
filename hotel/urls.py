@@ -1,5 +1,5 @@
 from django.urls import path
-from hotel.views import index, details, create, submit, delete, update, success, room_view# room_add #,upload_picture_view
+from hotel.views import index, details, create, submit, delete, update, success, room_view, messages_test# room_add #,upload_picture_view
 #
 app_name = 'hotel'
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path('success', view=success, name='success'),
     path('<int:hotel_id>/room', view=room_view, name='room'),
     # path('room_add', view=room_add, name='room_add'),
+    path('t', view=messages_test, name='t'),
 ]

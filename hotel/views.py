@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from hotel.models import Hotel, Room
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # from hotel.forms import  RoomForm #HotelForm
 
 # Create your views here.
@@ -26,7 +27,9 @@ def index(request):
 def details(request, hotel_id):
 
         hotel = get_object_or_404(Hotel, pk=hotel_id)
-
+        print("***" * 8)
+        print(hotel.youtube_video)
+        print("***" * 8)
         context = {
             "hotel": hotel
         }
@@ -35,6 +38,7 @@ def details(request, hotel_id):
 
 @login_required
 def create(request):
+
     return render(request, 'hotel/create.html')
 
 
@@ -45,8 +49,10 @@ def submit(request):
     # room = request.POST['room']
     location = request.POST['location']
     review = request.POST['review']
-    hotel = Hotel(name=name, owner=owner, location=location, review=review)
+    youtube_video = request.POST['youtube_video']
+    hotel = Hotel(name=name, owner=owner, location=location, review=review, youtube_video=youtube_video)
     hotel.save()
+
     return HttpResponseRedirect(reverse('hotel:list'))
 
 
@@ -67,10 +73,12 @@ def update(request, hotel_id):
     new_location = request.POST['location']
     new_owner = request.POST['owner']
     new_review = request.POST['review']
+    new_youtube_video = request.POST['youtube_video']
     hotel.name = new_name
     hotel.location = new_location
     hotel.owner = new_owner
     hotel.review = new_review
+    hotel.youtube_video = new_youtube_video
     hotel.save()
     return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
 
@@ -120,3 +128,14 @@ def room_view(request, hotel_id):
 #     room.save()
 #
 #     return HttpResponseRedirect(reverse('hotel:room', hotel_id))
+
+
+def messages_test(request):
+    messages.add_message(request, messages.SUCCESS, 'Indeed you added a Hotel')
+    hotel_all = " This are all the hotels: "
+
+    context = {
+        "hotel": hotel_all
+    }
+    return render(request, "hotel/test_mess.html", context)
+
