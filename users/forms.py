@@ -150,8 +150,10 @@ class ContactForm(forms.Form):
     first_name = forms.CharField(required=True, max_length=255, label='First Name')
     last_name = forms.CharField(required=True, max_length=255, label='Last Name')
     email = forms.EmailField(required=True, label='E-mail')
+    mobile = forms.CharField(required=False, max_length=20, label='Mobile Phone')
     subject = forms.CharField(required=True, max_length=255, label='Subject')
     message = forms.CharField(required=True, min_length=30, max_length=1000, label='Your message')
+
 
 
 # class ChangePasswordForm(forms.Form):
