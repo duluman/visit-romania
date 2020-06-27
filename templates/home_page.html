@@ -22,7 +22,7 @@
 {% include 'snippets/nav_bar_snippet.html' %}
 
 <!--Main Navigation-->
-
+{% include 'snippets/messages_add_snippet.html' %}
 <!--Main layout-->
 <main style="padding:15px 30px 25px 30px ">
 <!--Main container-->
@@ -34,9 +34,7 @@
 
     <!--Search for Hotels-->
     <div class="container" style="margin: 10px 10px 25px 10px">
-      {% block search_bar %}
 
-      {% endblock search_bar %}
     </div>
     <!--EndSearch for Hotels-->
 
@@ -44,10 +42,10 @@
     <div class="row">
         <hr class="my-5">
 
-                {% block hotel%}
+                {% block hotel %}
                     <div class="row">
                     </div>
-                {% endblock hotel%}
+                {% endblock hotel %}
     </div>
     <!--EndDisplay of the Hotels-->
 

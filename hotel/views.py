@@ -4,13 +4,14 @@ from hotel.models import Hotel, Room
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import random
 # from hotel.forms import  RoomForm #HotelForm
 
 # Create your views here.
 
 
 def index(request):
-    search_term = None
+    search_term = ''
     try:
         search_term = request.POST['search_for_city']
         hotel_list = Hotel.objects.filter(location__iregex=r'^{}'.format(search_term))
@@ -24,12 +25,17 @@ def index(request):
     return render(request, "hotel/index.html", context)
 
 
+def random_hotel(request):
+    hotel_list = Hotel.objects.all()
+
+    magician = random.randint(hotel_list.hote_id)
+    pass
+
+
 def details(request, hotel_id):
 
         hotel = get_object_or_404(Hotel, pk=hotel_id)
-        print("***" * 8)
-        print(hotel.youtube_video)
-        print("***" * 8)
+
         context = {
             "hotel": hotel
         }
@@ -52,7 +58,7 @@ def submit(request):
     youtube_video = request.POST['youtube_video']
     hotel = Hotel(name=name, owner=owner, location=location, review=review, youtube_video=youtube_video)
     hotel.save()
-
+    messages.success(request, 'Indeed you added a Hotel')
     return HttpResponseRedirect(reverse('hotel:list'))
 
 
@@ -62,6 +68,7 @@ def delete(request, hotel_id):
     hotel = get_object_or_404(Hotel, pk=hotel_id)
     print(hotel_id)
     hotel.delete()
+    messages.success(request, f'You just deleted hotel: {hotel}')
     return HttpResponseRedirect(reverse('hotel:list'))
 
 
@@ -80,6 +87,7 @@ def update(request, hotel_id):
     hotel.review = new_review
     hotel.youtube_video = new_youtube_video
     hotel.save()
+    messages.success(request, 'The update is completed')
     return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
 
 #todo upload picture form the staff administration page
@@ -131,7 +139,8 @@ def room_view(request, hotel_id):
 
 
 def messages_test(request):
-    messages.add_message(request, messages.SUCCESS, 'Indeed you added a Hotel')
+    messages.success(request, 'Indeed you added a Hotel')
+
     hotel_all = " This are all the hotels: "
 
     context = {

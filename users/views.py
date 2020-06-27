@@ -2,7 +2,7 @@
 from django.core.mail import EmailMultiAlternatives
 from users.admin import MyUserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.conf import settings
 from users.forms import LoginForm, UploadFileForm, UploadProfileImage #ContactForm, ChangePasswordForm
@@ -10,7 +10,12 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from helpers.upload import handle_upload_file
 from django.template.loader import get_template
+from users.forms import ContactForm
 # from django.contrib.sites.models import Site #v1 din register
+# used for reset password
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 
 
 def handle_login(request):
@@ -102,7 +107,7 @@ def register(request):
                    })
 
 
-#inca nu am folosit acest view
+# inca nu am folosit acest view
 def upload(request):
 
     if request.method == 'POST':
@@ -116,12 +121,69 @@ def upload(request):
     return render(request, 'users/upload.html', {'form': form})
 
 
-def contact_view(request):
-    # form = ContactForm(request.POST)
-    # if form.is_valid():
-    #     return render(request, 'users/contact.html', {'form': form})
+# def contact_view(request):
+#     # form = ContactForm(request.POST)
+#     # if form.is_valid():
+#     #     return render(request, 'users/contact.html', {'form': form})
+#
+#     return render(request, "users/contact.html")
 
-    return render(request, "users/contact.html")
+
+def contact_view(request):
+
+    form = ContactForm(request.POST)
+
+    # if request.user.is_authenticated:
+    #     print(request.user.last_name * 8)
+    #     remail = request.user.email
+    #     rfirst_name = request.user.first_name
+    #     rlast_name = request.user.last_name
+    #     form.email = remail
+    #     form.last_name = rlast_name
+    #     form.first_name = rfirst_name
+    #     print(form.first_name * 8)
+
+    if form.is_valid():
+        # if request.user.is_authenticated:
+        #     first_name = form.cleaned_data[request.user.first_name]
+        #     print(first_name * 8)
+        #     last_name = form.cleaned_data[request.user.last_name]
+        #     email = form.cleaned_data[request.user.email]
+        # else:
+        first_name = form.cleaned_data['first_name']
+
+        last_name = form.cleaned_data['last_name']
+        email = form.cleaned_data['email']
+        mobile = form.cleaned_data['mobile']
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+        email_template = get_template('users/contact_email_send.html')
+
+        email_content = email_template.render(
+            {
+
+                'first_name': first_name,
+                'last_name': last_name,
+                'email': email,
+                'mobile': mobile,
+                'subject': subject,
+                'message': message,
+            }
+        )
+
+        mail = EmailMultiAlternatives(
+            f'Visit Romania:{subject}',
+            email_content,
+            settings.EMAIL_HOST_USER,
+            [email],
+            (settings.EMAIL_HOST_USER, )
+        )
+        mail.content_subtype = 'html'
+        mail.send()
+
+        return HttpResponseRedirect(reverse('users:contact'))
+
+    return render(request, "users/contact.html", {'form': form})
 
 
 # @login_required
@@ -144,3 +206,26 @@ def contact_view(request):
 #                 {{ form.as_p }}
 #     <input type="submit" class="btn btn-primary mb-2" value="Change password" />
 # </form>
+
+
+@login_required()
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('users:profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'users/change_password.html', {
+        'form': form
+    })
+    pass
+
+
+
+
