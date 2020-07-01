@@ -3,7 +3,7 @@ from users.models import MyUser, Profile
 from django.contrib.auth import password_validation
 # from activation.signals import set_inactive_user
 # from django.conf import settings
-
+# from django.contrib.auth.forms import PasswordResetForm
 
 # class MyUserCreationForm(forms.ModelForm):
 #     class Meta:
@@ -200,3 +200,15 @@ class ContactForm(forms.Form):
 #         if commit:
 #             self.user.save(password=password)
 #         return self.user
+
+
+
+# class PasswordReset(PasswordResetForm):
+#     email = forms.EmailField(
+#         label=_("Email"),
+#         max_length=254,
+#         widget=forms.EmailInput(attrs={'autocomplete': 'email'})
+#     )
+
+
+

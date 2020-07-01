@@ -1,10 +1,20 @@
 from django.urls import path
-from hotel.views import index, details, create, submit, delete, update, success, room_view, messages_test# room_add #,upload_picture_view
+from hotel.views import (index,
+                         details,
+                         create,
+                         submit,
+                         delete,
+                         update,
+                         success,
+                         room_view,
+                         random_hotel,
+                         messages_test) # room_add #,upload_picture_view
 #
 app_name = 'hotel'
 
 urlpatterns = [
     path('', view=index, name='list'),
+    path('random', view=random_hotel, name='random'),
     path('<int:hotel_id>', view=details, name='details'),
     path('create', view=create, name='create'),
     path('submit', view=submit, name='submit'),

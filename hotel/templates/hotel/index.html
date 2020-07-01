@@ -2,22 +2,22 @@
 {% load static %}
 <html>
 
-<head>
-    <title> Hotels </title>
-</head>
+<!--<head>-->
+    <!--<title> Hotels </title>-->
+<!--</head>-->
 
 
-<body>
-    <div class='menu-container'>
-        <div class='menu'>
-            <div>
-                <p>
-                    Click <a href="{% url 'hotel:create' %}"> here </a> to create a new hotel
-                </p>
-            </div>
-        </div>
+<!--<body>-->
+    <!--<div class='menu-container'>-->
+        <!--<div class='menu'>-->
+            <!--<div>-->
+                <!--<p>-->
+                    <!--Click <a href="{% url 'hotel:create' %}"> here </a> to create a new hotel-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
 
 
@@ -34,15 +34,23 @@
 
                     {% else %}
 
-                        <img src="https://www.romaniaexperience.com/wp-content/uploads/2015/02/06-arena-regia.jpg"
+                        <img src="{{ MEDIA_URL }}/hotel_picture/arena.jpg"
                              class="img-fluid" alt="">
                         <div class="mask rgba-white-slight"></div>
 
                     {% endif %}
 
-                    <span class="badge badge-danger">Danger</span>
+                    <span class="badge badge-danger">
+                        <i class="fas fa-sun pr-2" aria-hidden="true"></i>Discount</span>
                     <span class="badge success-color">
-                        <i class="fas fa-plane pr-2" aria-hidden="true"></i>Nature</span>
+                        <i class="fas fa-plane pr-2" aria-hidden="true"></i>New on page</span>
+                    <span class="badge badge-warning">
+                        <i class="fas fa-car pr-2" aria-hidden="true"></i> Free parking </span>
+
+                    <span class="badge badge-info">
+                        <i class="fas fa-pen pr-2" aria-hidden="true"></i>Refund 100% </span>
+                    <span class="badge badge-dark">
+                        <i class="fas fa-clock pr-2" aria-hidden="true"></i>Last minute </span>
 
 
                     <!-- vreau sa las utilizatorul sa puna tag: Oferta, Reducere, Last minute-->
@@ -73,7 +81,7 @@
 
 
 
-    {% endblock hotel%}
+    {% endblock hotel %}
 
 </body>
 
