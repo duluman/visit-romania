@@ -27,9 +27,17 @@ def index(request):
 
 def random_hotel(request):
     hotel_list = Hotel.objects.all()
+    print("*****************")
+    print(hotel_list)
+    print("*****************")
 
-    magician = random.randint(hotel_list.hote_id)
-    pass
+    magician = random.choice(hotel_list)
+
+    context = {
+
+        'rand_location': magician
+    }
+    return render(request, "hotel/random_location.html", context)
 
 
 def details(request, hotel_id):

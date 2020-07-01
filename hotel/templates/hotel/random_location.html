@@ -1,0 +1,73 @@
+{% extends "home_page.html" %}
+{% load static %}
+{% block hotel%}
+
+
+<div class="row">
+    <div class="col-lg-4 ">
+        <h3> And the winner is : {{ rand_location.name }} </h3>
+                <h4 class="my-4 font-weight-bold">
+                    <br>
+            Name: {{ rand_location.name }}</h4>
+        <p> Location: {{ rand_location.location }} </p>
+        <p> Owner: {{ rand_location.owner }} </p>
+
+        <p> Review: {{ rand_location.review }} </p>
+        <p class="grey-text">Descriere locatie</p>
+
+    </div>
+
+    <div class="col-lg-4 ">
+    <div class="view overlay z-depth-3-half">
+
+        {% if rand_location.hotel_picture %}
+
+            <img src="{{ MEDIA_URL }}{{ rand_location.hotel_picture }}" class="img-fluid" alt=""/>
+            <div class="mask rgba-white-slight"></div>
+
+        {% else %}
+
+            <img src="{{ MEDIA_URL }}/hotel_picture/arena.jpg"
+                 class="img-fluid" alt="">
+            <div class="mask rgba-white-slight"></div>
+
+        {% endif %}
+
+        <span class="badge badge-danger">
+            <i class="fas fa-sun pr-2" aria-hidden="true"></i>Discount</span>
+        <span class="badge success-color">
+            <i class="fas fa-plane pr-2" aria-hidden="true"></i>New on page</span>
+        <span class="badge badge-warning">
+            <i class="fas fa-car pr-2" aria-hidden="true"></i> Free parking </span>
+
+        <span class="badge badge-info">
+            <i class="fas fa-pen pr-2" aria-hidden="true"></i>Refund 100% </span>
+        <span class="badge badge-dark">
+            <i class="fas fa-clock pr-2" aria-hidden="true"></i>Last minute </span>
+
+        <!-- vreau sa las utilizatorul sa puna tag: Oferta, Reducere, Last minute-->
+    </div>
+        </div>
+
+
+    <div class="col-lg-4">
+
+    </div>
+
+
+    <div  class="container-fluid d-flex align-items-center justify-content-center">
+        <a href="{% url 'hotel:details' rand_location.id %}" class="btn btn-primary">
+
+            View details</a>
+
+
+        <a class="button"  href="{% url 'hotel:room' rand_location.id  %}">
+        <h4>  <i class="fas fa-star mr-1 " ></i> View Rooms </h4></a>
+        <br>
+    </div>
+
+
+</div>
+
+
+{% endblock hotel %}
