@@ -45,6 +45,7 @@ def handle_logout(request):
 
 @login_required
 def profile(request):
+    remote_address = request.META.get('REMOTE_ADDR')
     if request.method == 'POST':
         user_profile = request.user.profile
         form = UploadProfileImage(request.POST, request.FILES, instance=user_profile)
@@ -58,12 +59,15 @@ def profile(request):
     else:
         form = UploadProfileImage()
 
-    return render(request, 'users/profile.html', {'form': form})
+    return render(request, 'users/profile.html', {
+        'form': form,
+        'ip_address': remote_address
+    })
 
 
 @login_required
 def profile_email(request):
-
+    remote_address = request.META.get('REMOTE_ADDR')
     email_template = get_template('users/email.html')
     email_content = email_template.render(
         {
@@ -71,6 +75,7 @@ def profile_email(request):
             'your_email': request.user.email,
             'first_name': request.user.first_name,
             'last_name': request.user.last_name,
+            'ip_address': remote_address
         })
 
     mail = EmailMultiAlternatives(
