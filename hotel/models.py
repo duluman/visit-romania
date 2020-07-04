@@ -22,6 +22,7 @@ class Room(models.Model):
     balcony = models.BooleanField(default=False)
     room_picture = models.ImageField(upload_to='room_picture/', blank=True, null=True)
     room_youtube_video = models.CharField(max_length=255, default=None)
+    price = models.DecimalField(max_digits=7, decimal_places=2, default=149.99)
 
     def __str__(self):
         return self.name

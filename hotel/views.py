@@ -122,6 +122,7 @@ def success(request):
 #     return render(request, "hotel/room.html", context)
 
 
+@login_required
 def room_view(request, hotel_id):
 
     room_list = Room.objects.filter(hotel_id=hotel_id)
@@ -132,27 +133,32 @@ def room_view(request, hotel_id):
     return render(request, "hotel/room.html", context)
 
 
+@login_required
+def create_room_view(request, hotel_id):
+
+    return render(request, 'hotel/room_add_ok.html')
+
+
+# @login_required
 # def room_add(request, hotel_id):
-#     # hotel_id = hotel_id
-#     hotel_id = request.POST['hotel_id']
+#
 #     name = request.POST['name']
 #     room_type = request.POST['room_type']
 #     bathroom = request.POST['bathroom']
 #     balcony = request.POST['balcony']
-#     # room_picture = request.POST['room_picture']
-#     room = Room(hotel_id=hotel_id, name=name, room_type=room_type, bathroom=bathroom, balcony=balcony)
-#     room.save()
 #
-#     return HttpResponseRedirect(reverse('hotel:room', hotel_id))
+#     room = Room(hotel_id=hotel_id, name=name, room_type=room_type, bathroom=bathroom, balcony=balcony, room_picture=None)
+#     room.save()
+#     return HttpResponseRedirect(reverse('hotel:room', args=(hotel_id, )))
 
 
-def messages_test(request):
-    messages.success(request, 'Indeed you added a Hotel')
-
-    hotel_all = " This are all the hotels: "
-
-    context = {
-        "hotel": hotel_all
-    }
-    return render(request, "hotel/test_mess.html", context)
+# def messages_test(request):
+#     messages.success(request, 'Indeed you added a Hotel')
+#
+#     hotel_all = " This are all the hotels: "
+#
+#     context = {
+#         "hotel": hotel_all
+#     }
+#     return render(request, "hotel/test_mess.html", context)
 

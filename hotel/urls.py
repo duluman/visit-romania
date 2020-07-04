@@ -8,7 +8,9 @@ from hotel.views import (index,
                          success,
                          room_view,
                          random_hotel,
-                         messages_test) # room_add #,upload_picture_view
+                         # room_add,
+                         create_room_view,
+                         ) # room_add #,upload_picture_view messages_test
 #
 app_name = 'hotel'
 
@@ -23,6 +25,7 @@ urlpatterns = [
     # path('upload', view=upload_picture_view, name='upload'),
     path('success', view=success, name='success'),
     path('<int:hotel_id>/room', view=room_view, name='room'),
-    # path('room_add', view=room_add, name='room_add'),
-    path('t', view=messages_test, name='t'),
+    # path('<int:hotel_id>/room/room_add/', view=room_add, name='room_add'),
+    path('<int:hotel_id>/room/add/', view=create_room_view, name='create_room_view'),
+    # path('t', view=messages_test, name='t'),
 ]

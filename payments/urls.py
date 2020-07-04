@@ -14,7 +14,7 @@ urlpatterns = [
     path('cards/', view=view_cards, name='view_cards'),
     path('cards/add', view=add_card, name='add_card'),
     path('cards/delete/<str:card_id>/', view=delete_card, name='delete_card'),
-    path('pay/', view=handle_payment, name='pay'),
+    path('pay/<int:room_id>/', view=handle_payment, name='pay'),
     path('process/', view=handle_payment_process, name='process'),
     path('done/', view=payment_done, name='done'),
     path('failed/', view=payment_failed, name='failed')
