@@ -28,9 +28,15 @@ class Room(models.Model):
         return self.name
 
 
-# class Order(models.Model):
-#     first_name = models.CharField(max_length=50)
-#     last_name = models.CharField(max_length=50)
-#     email = models.EmailField()
-#     address = models.CharField(max_length=250)
-#     postal_code = models.CharField(max_length=50)
+class Period(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=7, decimal_places=2, default=149.99)
+    days = models.PositiveIntegerField(default=1)
+    total = models.DecimalField(max_digits=9, decimal_places=2, default=149.99)
+    # pay = int(days)*int(price)
+    # total = days * price
+    # email = models.EmailField()
+    # address = models.CharField(max_length=250)
+    # postal_code = models.CharField(max_length=50)
+    def __str__(self):
+        return self.room
