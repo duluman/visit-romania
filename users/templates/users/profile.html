@@ -5,9 +5,11 @@
 
 <div class="row">
     <div class="col-md-4" >
+
     <p> First Name: {{ user.first_name }}</p>
     <p> Last Name: {{ user.last_name }}</p>
     <p> E-mail: {{ user.email }}</p>
+        <p> Your ip address is : {{ ip_address }}  </p>
 
     <a class="btn btn-primary mb-2" href="{% url 'users:profile_email' %}">E-mail me</a>
 

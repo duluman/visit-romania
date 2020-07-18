@@ -27,6 +27,9 @@
 
     </p>
 
+
+
+
     <div  >
         {% if room.room_picture %}
         <img src="{{ MEDIA_URL }}{{ room.room_picture }}" class="img-fluid" alt=""/>
@@ -36,9 +39,32 @@
         {% endif %}
         <div class="mask rgba-white-slight"></div>
     </div>
+        <div class="col">
         <div class="container-fluid d-flex align-items-center justify-content-center">
-            <input class="btn btn-green mb-2"  type="submit" value="Reserve it now!">
+
+            <p class="btn btn-blue mb-2" > Price: {{ room.price }} RON </p>
+            <a href="{% url 'payments:pay' room.id %}"> click here</a>
+            <input class="btn btn-green mb-2"  type="submit" value="Reserve it now!" >
+
         </div>
+            <div class="container-fluid d-flex align-items-center justify-content-center">
+            {% for period in period_list %}
+                {% if period.room_id == room.id %}
+            <div class="col">
+                   <p> Price per day {{ period.price }} </p>
+                   <p> Days {{ period.days }} </p>
+                   <p> Total = {{  period.total }} </p>
+                   <p> Total {% widthratio period.days 1 period.price %} </p>
+                </div>
+                {% endif %}
+
+
+
+
+
+            {% endfor  %}
+                </div>
+            </div>
 
 
     <!--Section: Youtube Video-->
@@ -65,9 +91,9 @@
 
     </div>
 
+
     {% endfor %}
 
 </div>
-
 
 {% endblock content %}

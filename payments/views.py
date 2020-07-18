@@ -4,6 +4,7 @@ import stripe
 from django.contrib.auth.decorators import login_required
 from payments.models import StripeCard
 from django.contrib.sites.models import Site
+from hotel.models import Room
 
 # Create your views here.
 
@@ -115,12 +116,21 @@ def delete_card(request, card_id):
 
 
 @login_required
-def handle_payment(request):
+def handle_payment(request, room_id):
+
+    print("***********************")
+    print(room_id)
+
+    room_pay = get_object_or_404(Room, pk=room_id)
+    price_pay = int(room_pay.price * 100)
+
+    # return HttpResponse("OK")
+
     stripe_customer = request.user.stripe_data
     host = Site.objects.get_current().domain
     payment_process_url = f"{host}{reverse('payments:process')}"
     payment_intent = stripe.PaymentIntent.create(
-        amount=220,
+        amount=price_pay,
         currency='ron',
         customer=stripe_customer.customer_id,
         payment_method=stripe_customer.cards.first().card_id,
@@ -157,7 +167,8 @@ def handle_payment_process(request):
 
 @login_required
 def payment_done(request):
-    return HttpResponse('Payment done!')
+
+    return render(request, "payments/payment_done.html")
 
 
 @login_required()
