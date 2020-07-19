@@ -7,6 +7,7 @@
     <div class="col-lg-4 col-md-4 mb-2">
         <br>
         <h1>*****************</h1>
+        <h5> Hotel:  {{room.hotel.name}}</h5>
     <p> Room name: {{ room.name }}</p>
     <p> Room type: {{ room.room_type }}</p>
     <p> Bathroom:
@@ -53,8 +54,8 @@
             <div class="col">
                    <p> Price per day {{ period.price }} </p>
                    <p> Days {{ period.days }} </p>
-                   <p> Total = {{  period.total }} </p>
                    <p> Total {% widthratio period.days 1 period.price %} </p>
+                    <a href="{% url 'hotel:price_update' period.room_id %}"> click here</a>
                 </div>
                 {% endif %}
 
@@ -64,6 +65,7 @@
 
             {% endfor  %}
                 </div>
+            <hr>
             </div>
 
 

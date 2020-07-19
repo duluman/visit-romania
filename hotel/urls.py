@@ -10,6 +10,8 @@ from hotel.views import (index,
                          random_hotel,
                          # room_add,
                          create_room_view,
+                         AddRoomPriceView,
+                         reservation_view
                          # update_room_price
                          ) # room_add #,upload_picture_view messages_test
 #
@@ -25,9 +27,11 @@ urlpatterns = [
     path('update/<int:hotel_id>', view=update, name='update'),
     # path('upload', view=upload_picture_view, name='upload'),
     path('success', view=success, name='success'),
-    path('<int:hotel_id>/room', view=room_view, name='room'),
+    path('<int:hotel_id>/room/', view=room_view, name='room'),
+    path('room/update/<int:pk>/', AddRoomPriceView.as_view(), name='price_update'),
     # path('<int:hotel_id>/room/update', view=update_room_price, name='update_price'),
     # path('<int:hotel_id>/room/room_add/', view=room_add, name='room_add'),
     path('<int:hotel_id>/room/add/', view=create_room_view, name='create_room_view'),
     # path('t', view=messages_test, name='t'),
+    path('reservation', view=reservation_view, name='reservation'),
 ]
