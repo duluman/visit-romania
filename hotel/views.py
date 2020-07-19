@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import random
+from django.views.generic import UpdateView
 # from hotel.forms import  RoomForm #HotelForm
 
 # Create your views here.
@@ -131,6 +132,9 @@ def room_view(request, hotel_id):
 
     period_list = Period.objects.all()
 
+    print("$$$$$$$$$$$$-----$$$$$$$$$$")
+
+
     # for ppperiod in period_list:
     #     for room in room_list:
     #     # print("--------------------")
@@ -181,20 +185,26 @@ def room_view(request, hotel_id):
     return render(request, "hotel/room.html", context)
 
 
-# def update_room_price(request, hotel_id):
-#     room_list = Room.objects.filter(hotel_id=hotel_id)
-#     period_list = Period.objects.all()
-#     print(period_list)
-#     for room in room_list:
-#         for ppperiod in period_list:
-#             # print("OK | " * 14)
-#             print("OK | " * 7)
-#             print(room.id)
-#             print("OK | " * 7)
-#             print(ppperiod.room_id)
-#             new_total = request.POST['total']
-#     return HttpResponseRedirect(reverse('hotel:room', args=(hotel_id,)))
+class AddRoomPriceView(UpdateView):
+    model = Period
+    fields = ['days']
+    template_name = 'hotel/update_price.html'
 
+
+def reservation_view(request):
+    # new_days = request.POST['days']
+    # new_price = request.POST['price']
+    # total = new_days * new_price
+    # print(total)
+    print("$$$$$$$$$$$$$$$$$$$$$$")
+
+    template = 'hotel/reservation.html'
+    if request.POST:
+        context = {'reservation_context': ' dddonnee!'}
+    else:
+        context = {'reservation_context': ' Whar are you doing here?!'}
+
+    return render(request, template, context)
 
 @login_required
 def create_room_view(request, hotel_id):

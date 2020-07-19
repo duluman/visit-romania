@@ -1,0 +1,12 @@
+{% extends "home_page.html" %}
+{% load static %}
+{% block content%}
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-green mb-2" value="Update" type="submit">
+</form>
+
+{% endblock content%}
