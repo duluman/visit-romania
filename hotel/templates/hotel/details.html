@@ -12,7 +12,7 @@
     <p> Location: {{ hotel.location }}</p>
     <p> Owner: {{ hotel.owner }}</p>
     <p>                         </p>
-    <p> Review: {{ hotel.review }}</p>
+        <p> Stars: <big>{{ hotel.review }}</big></p>
     {% if user.is_staff %}
         <div>
             <a href="{% url 'hotel:delete' hotel.id %}" class="btn btn-red mt-3 mb-4"> Delete </a>
@@ -88,6 +88,21 @@
     <h1>  <i class="fas fa-star mr-1 " ></i> View Rooms </h1></a>
     <br>
 </div>
+
+<div class="row align-items-center">
+
+    {% for customer_review in review_list %}
+    <div class="col-md-3">
+    <p>Customer: {{ customer_review.customer.first_name }} {{ customer_review.customer.last_name }}</p>
+    <p>Review: {{ customer_review.comment }}</p>
+    <p>Date: {{ customer_review.date }}</p>
+        <p>Rating: <big>{{ customer_review.stars }} </big></p>
+        <hr>
+     </div>
+    {% endfor %}
+
+</div>
+
 
 <!--Section: Best Features-->
             <section id="best-features" class="text-center">

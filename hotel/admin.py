@@ -1,5 +1,5 @@
 from django.contrib import admin
-from hotel.models import Hotel, Room, Period
+from hotel.models import Hotel, Room, Period, CustomerReview
 # Register your models here.
 
 
@@ -42,6 +42,7 @@ class HotelAdmin(admin.ModelAdmin):
 
 class RoomTabularLine(admin.TabularInline):
     model = Period
+    extra = 0
 
 
 @admin.register(Room)
@@ -71,5 +72,6 @@ class RoomAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
+admin.site.register(CustomerReview)
 
 

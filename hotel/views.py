@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from django.http import HttpResponseRedirect
-from hotel.models import Hotel, Room, Period
+from hotel.models import Hotel, Room, Period, CustomerReview
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import random
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, CreateView
 # from hotel.forms import  RoomForm #HotelForm
 
 # Create your views here.
@@ -13,6 +13,7 @@ from django.views.generic import UpdateView
 
 def index(request):
     search_term = ''
+
     try:
         search_term = request.POST['search_for_city']
         hotel_list = Hotel.objects.filter(location__iregex=r'^{}'.format(search_term))
@@ -21,32 +22,27 @@ def index(request):
 
     context = {
         'hotel_list': hotel_list,
-        'search_term': search_term
-    }
+        'search_term': search_term}
+
     return render(request, "hotel/index.html", context)
 
 
 def random_hotel(request):
     hotel_list = Hotel.objects.all()
-    print("*****************")
-    print(hotel_list)
-    print("*****************")
-
     magician = random.choice(hotel_list)
+    context = {'rand_location': magician}
 
-    context = {
-
-        'rand_location': magician
-    }
     return render(request, "hotel/random_location.html", context)
 
 
 def details(request, hotel_id):
 
         hotel = get_object_or_404(Hotel, pk=hotel_id)
+        review_list = CustomerReview.objects.filter(hotel_to_review_id=hotel_id)
 
         context = {
-            "hotel": hotel
+            "hotel": hotel,
+            "review_list": review_list
         }
         return render(request, "hotel/details.html", context)
 
@@ -61,7 +57,6 @@ def create(request):
 def submit(request):
     name = request.POST['name']
     owner = request.POST['owner']
-    # room = request.POST['room']
     location = request.POST['location']
     review = request.POST['review']
     youtube_video = request.POST['youtube_video']
@@ -99,139 +94,71 @@ def update(request, hotel_id):
     messages.success(request, 'The update is completed')
     return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
 
-#todo upload picture form the staff administration page
-# def upload_picture_view(request):
-#     if request.method == 'POST':
-#         form = HotelForm(request.POST, request.FILES)
-#
-#         if form.is_valid():
-#             form.save()
-#             return redirect('success')
-#     else:
-#         form = HotelForm()
-#     return render(request, 'upload.html', {'form': form})
-
 
 def success(request):
     return HttpResponse('successfully uploaded')
 
 
-# def room_view(request, room_id):
-#     room = get_object_or_404(RoomForm, pk=room_id)
-#     # form = RoomForm(request.POST, pk=room_id)
-#     context = {'room': room}
-#     return render(request, "hotel/room.html", context)
+def create_review(request, hotel_id):
+    return render(request, 'hotel/create_review.html')
 
 
-# @login_required
+def submit_review(request):
+    customer = request.user
+    hotel_to_review = "How to get the hotel review"
+    comment = request.POST['comment']
+    stars = request.POST['stars']
+
+    print(comment)
+    print(stars)
+    print(customer)
+    print(hotel_to_review)
+    # for hotel in hotel_to_review:
+    #     print(hotel.name)
+    return HttpResponse('Submit view review')
+    #
+    # customerreview = CustomerReview(comment=comment, stars=stars)
+    # customerreview.save()
+    # messages.success(request, 'Indeed you added a Review')
+    # return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
+
+
 def room_view(request, hotel_id):
 
     room_list = Room.objects.filter(hotel_id=hotel_id)
-    # period_list = Period.objects.filter(room_id=room_id)
-    # period_list = Period.objects.all()
-
     period_list = Period.objects.all()
-
-    print("$$$$$$$$$$$$-----$$$$$$$$$$")
-
-
-    # for ppperiod in period_list:
-    #     for room in room_list:
-    #     # print("--------------------")
-    #     # print(f"--------------------{room}")
-    #     #
-    #     # test_room = room.id
-    #     # print(f"-------------------- ===== {test_room}")
-    #     # period_list = Period.objects.filter(room=room.id)
-    #
-    #         # print(f"--------------------{room.name}")
-    #         print(f"--------------------                {ppperiod.room}")
-    #         print(f"--------------------{room.name}")
-    #         p_room = str(ppperiod.room)
-    #         r_room = str(room.name)
-    #
-    #         if r_room == p_room:
-    #
-    #             obj_period = ppperiod
-    #             print("OK")
-    #             return obj_period
-
-
-
-        # print(f"--------------------                {period_list}")
-        # print(period_list)
-        # print("--------------------")
-
-
-
-    # for room in room_list:
-    #     # pk = room.id
-    #
-    #     period_obj = get_object_or_404(Period)
-    #     # if period_obj.days > 1:
-    #     #     period_obj.total = period_obj.price * period_obj.days
-    #     # print("--------------------")
-    #     # print(period_obj)
-    #     # print("--------------------")
-
 
     context = {
         'room_list': room_list,
         'hotel_id': hotel_id,
-        # 'room_id': room_id,
-        'period_list': period_list,
-        # 'period_list': period_obj,
-    }
+        'period_list': period_list}
+
     return render(request, "hotel/room.html", context)
 
 
 class AddRoomPriceView(UpdateView):
     model = Period
     fields = ['days']
+    # fields = ['days', 'seasons']
     template_name = 'hotel/update_price.html'
 
-
+@login_required
 def reservation_view(request):
-    # new_days = request.POST['days']
-    # new_price = request.POST['price']
-    # total = new_days * new_price
-    # print(total)
+
     print("$$$$$$$$$$$$$$$$$$$$$$")
 
     template = 'hotel/reservation.html'
     if request.POST:
-        context = {'reservation_context': ' dddonnee!'}
+        context = {'reservation_context': ' Done!'}
     else:
         context = {'reservation_context': ' Whar are you doing here?!'}
 
     return render(request, template, context)
 
-@login_required
-def create_room_view(request, hotel_id):
 
-    return render(request, 'hotel/room_add_ok.html')
+class AddRoom(CreateView):
+    model = Room
+    fields = '__all__'
+    template_name = 'hotel/room_add.html'
 
-
-# @login_required
-# def room_add(request, hotel_id):
-#
-#     name = request.POST['name']
-#     room_type = request.POST['room_type']
-#     bathroom = request.POST['bathroom']
-#     balcony = request.POST['balcony']
-#
-#     room = Room(hotel_id=hotel_id, name=name, room_type=room_type, bathroom=bathroom, balcony=balcony, room_picture=None)
-#     room.save()
-#     return HttpResponseRedirect(reverse('hotel:room', args=(hotel_id, )))
-
-
-# def messages_test(request):
-#     messages.success(request, 'Indeed you added a Hotel')
-#
-#     hotel_all = " This are all the hotels: "
-#
-#     context = {
-#         "hotel": hotel_all
-#     }
-#     return render(request, "hotel/test_mess.html", context)
 

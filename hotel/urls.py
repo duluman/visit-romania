@@ -9,9 +9,13 @@ from hotel.views import (index,
                          room_view,
                          random_hotel,
                          # room_add,
-                         create_room_view,
+                         # create_room_view,
                          AddRoomPriceView,
-                         reservation_view
+                         reservation_view,
+                         AddRoom,
+                         create_review,
+                         submit_review
+
                          # update_room_price
                          ) # room_add #,upload_picture_view messages_test
 #
@@ -26,12 +30,15 @@ urlpatterns = [
     path('delete/<int:hotel_id>', view=delete, name='delete'),
     path('update/<int:hotel_id>', view=update, name='update'),
     # path('upload', view=upload_picture_view, name='upload'),
+    path('<int:hotel_id>/create_review/', view=create_review, name='create_review'),
+    path('submit_review/', view=submit_review, name='submit_review'),
     path('success', view=success, name='success'),
     path('<int:hotel_id>/room/', view=room_view, name='room'),
     path('room/update/<int:pk>/', AddRoomPriceView.as_view(), name='price_update'),
     # path('<int:hotel_id>/room/update', view=update_room_price, name='update_price'),
     # path('<int:hotel_id>/room/room_add/', view=room_add, name='room_add'),
-    path('<int:hotel_id>/room/add/', view=create_room_view, name='create_room_view'),
+    path('<int:hotel_id>/room/add/', AddRoom.as_view(), name='create_room'),
     # path('t', view=messages_test, name='t'),
     path('reservation', view=reservation_view, name='reservation'),
 ]
+
