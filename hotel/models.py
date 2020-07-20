@@ -8,7 +8,10 @@ class Hotel(models.Model):
     name = models.CharField(max_length=255, default="Hotel")
     location = models.CharField(max_length=255, default=None)
     owner = models.CharField(max_length=255, default=None)
-    # administrator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, relatedname='proprietar')
+    administrator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                      on_delete=models.CASCADE,
+                                      related_name='proprietar',
+                                      default=1)
     review = models.CharField(max_length=1000, default=None)
     hotel_picture = models.ImageField(upload_to='hotel_picture/', blank=True, null=True)
     youtube_video = models.CharField(max_length=255, default=None, blank=True)
