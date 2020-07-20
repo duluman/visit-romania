@@ -17,8 +17,7 @@ class HotelAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return queryset
 
-        queryset = queryset.filter(owner=None)
-        # queryset = queryset.filter(administrator=request.user)
+        queryset = queryset.filter(administrator=request.user)
         return queryset
 
     def get_fields(self, request, obj=None):
@@ -27,18 +26,18 @@ class HotelAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return all_fields
 
-        all_fields.remove('name')
+        all_fields.remove('administrator')
         return all_fields
 
-    # def save_model(self, request, obj, form, change):
-    #     #daca nu a fost creat hotelul
-    #     if not obj.pk:
-    #         administrator = form.cleaned_data.get('administrator')
-    #
-    #         if not administrator:
-    #             obj.administrator = request.user
-    #
-    #     super().save_model(request, obj, form, change)
+    def save_model(self, request, obj, form, change):
+
+        if not obj.pk:
+            administrator = form.cleaned_data.get('administrator')
+
+            if not administrator:
+                obj.administrator = request.user
+
+        super().save_model(request, obj, form, change)
 
 
 class RoomTabularLine(admin.TabularInline):
@@ -54,27 +53,23 @@ class RoomAdmin(admin.ModelAdmin):
     class Meta:
         model = Room
 
-    # def get_queryset(self, request):
-    #     queryset = super().get_queryset(request)
-    #
-    #     if request.user.is_superuser:
-    #         return queryset
-    #
-    #     queryset = queryset.filter(hotel__in=request.user.propietar.all())
-    #
-    #     return queryset
-    #
-    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
-    #     if not request.user.is_superuser:
-    #         if db_field.name == 'hotel':
-    #             kwargs['queryset'] = Hotel.objects.filter(administrator=request.user)
-    #
-    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+
+        if request.user.is_superuser:
+            return queryset
+
+        queryset = queryset.filter(hotel__in=request.user.proprietar.all())
+
+        return queryset
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            if db_field.name == 'hotel':
+                kwargs['queryset'] = Hotel.objects.filter(administrator=request.user)
+
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-
-# admin.site.register(Hotel, HotelAdmin)
-# admin.site.register(Room, RoomAdmin)
-# admin.site.register(Period)
 
 
