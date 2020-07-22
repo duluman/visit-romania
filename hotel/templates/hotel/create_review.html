@@ -1,0 +1,52 @@
+{% extends "home_page.html" %}
+{% load static %}
+
+{% block content%}
+
+
+    <h3>Add Review </h3>
+
+    <form  action = "{% url 'hotel:submit_review' %}" method="post" class="col-md-4 mb-5" >
+        {% csrf_token %}
+
+        <!--<label >Customer</label>-->
+        <!--<div class="col-md-4 mb-5">-->
+            <!--<input type="text" name="customer" />-->
+        <!--</div>-->
+
+        <!--<label>Hotel Review</label>-->
+        <!--<div class="col-md-4 mb-5">-->
+
+            <!--<input type="text" name="hotel_to_review"/>-->
+        <!--</div>-->
+
+        <label>Comment</label>
+        <div class="col-md-4 mb-5">
+            <input type="text" name="comment"/>
+        </div>
+
+        <!--<label>Date</label>-->
+        <!--<div class="col-md-4 mb-5">-->
+            <!--<input type="text" name="date"/>-->
+        <!--</div>-->
+
+
+        <label>Stars</label>
+        <div class="col-md-4 mb-5">
+            <input type="text" name="stars"/>
+        </div>
+
+
+            <div class="col-md-4 mb-5">
+            <input type="submit" name='Update' class="btn btn-green mt-4" value="Create">
+        </div>
+
+    </form>
+
+
+
+
+
+{% endblock content%}
+
+

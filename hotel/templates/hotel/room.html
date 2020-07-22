@@ -1,7 +1,8 @@
 {% extends "home_page.html" %}
 {% load static %}
 {% block content%}
-
+<a class="nav-link red-text mr-2 " href="{% url 'hotel:create_room' hotel_id %}" >
+                        <i class="fas fa-magic mr-1"></i> Create Room</a>
 <div class="row align-items-center">
     {% for room in room_list %}
     <div class="col-lg-4 col-md-4 mb-2">
@@ -43,19 +44,21 @@
         <div class="col">
         <div class="container-fluid d-flex align-items-center justify-content-center">
 
-            <p class="btn btn-blue mb-2" > Price: {{ room.price }} RON </p>
-            <a href="{% url 'payments:pay' room.id %}"> click here</a>
-            <input class="btn btn-green mb-2"  type="submit" value="Reserve it now!" >
+            <a class="btn btn-blue mb-2" href="{% url 'payments:pay' room.id %}"> Pay now!</a>
+            <a class="btn btn-blue mb-2" href="{% url 'hotel:reservation' %}"> Reserve it now! </a>
 
         </div>
             <div class="container-fluid d-flex align-items-center justify-content-center">
             {% for period in period_list %}
                 {% if period.room_id == room.id %}
             <div class="col">
+                    <p style="text-transform:uppercase"> Season: {{ period.seasons }} </p>
                    <p> Price per day {{ period.price }} </p>
                    <p> Days {{ period.days }} </p>
+                <p>Change the numers of days
+                    <a href="{% url 'hotel:price_update' room.id %}"> click here</a> </p>
                    <p> Total {% widthratio period.days 1 period.price %} </p>
-                    <a href="{% url 'hotel:price_update' period.room_id %}"> click here</a>
+
                 </div>
                 {% endif %}
 

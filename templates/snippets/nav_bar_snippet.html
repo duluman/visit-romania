@@ -27,14 +27,20 @@
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="/hotel">Hotel</a>
+                      <a class="nav-link" href="{% url 'hotel:list' %}">Hotel</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="/hotel/random">Random</a>
+                      <a class="nav-link" href="{% url 'hotel:random' %}">Random</a>
                   </li>
+
                   <li class="nav-item">
-                      <a class="nav-link" href="/users/contact">Contact</a>
+                      <a class="nav-link" href="{% url 'review:app_review' %}">Review</a>
                   </li>
+
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'users:contact' %}">Contact</a>
+                  </li>
+
               </ul>
                         <!-- Buttons -->
 
@@ -103,8 +109,7 @@
                 <a class="nav-link white-text mr-2" href="{% url 'hotel:create' %}">
                         <i class="fas fa-magic mr-1"></i> Create Hotel</a>
 
-                <!--<a class="nav-link white-text mr-2 " href="/" >-->
-                        <!--<i class="fas fa-magic mr-1"></i> Create Room</a>-->
+
             </div>
       </nav>
          {% endif %}

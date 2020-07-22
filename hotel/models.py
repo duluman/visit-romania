@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
+from django.utils import timezone
 # Create your models here.
 
 
@@ -33,6 +34,10 @@ class Room(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        # return reverse('hotel:room', str(self.hotel.id))
+        return reverse('hotel:list')
+
 
 class Period(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -41,11 +46,6 @@ class Period(models.Model):
     days = models.PositiveIntegerField(default=1)
     total = models.DecimalField(max_digits=9, decimal_places=2, default=149.99)
     available = models.BooleanField(default=True)
-    # pay = int(days)*int(price)
-    # total = days * price
-    # email = models.EmailField()
-    # address = models.CharField(max_length=250)
-    # postal_code = models.CharField(max_length=50)
 
     SEASON_CHOICE = [("spring", "spring"),
                      ("summer", "summer"),
@@ -61,9 +61,31 @@ class Period(models.Model):
     def __str__(self):
         return str(self.price)
 
-
     def get_absolute_url(self):
-        # return reverse('hotel:list')
+        return reverse('hotel:list')
 
-        return reverse('hotel:reservation')
-# , str(self.room.hotel.id)
+
+class CustomerReview(models.Model):
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                 on_delete=models.CASCADE,
+                                 related_name='client',
+                                 default=1)
+
+    hotel_to_review = models.ForeignKey(Hotel,
+                                        on_delete=models.CASCADE,
+                                        default=None)
+
+    comment = models.TextField(default=None)
+
+    date = models.DateTimeField(default=timezone.now)
+
+    CHOICE = [("* * * * *","5"),
+              ("* * * *", "4"),
+              ("* * *", "3"),
+              ("* *", "2"),
+              ("*", "1")]
+
+    stars = models.CharField(max_length=10, choices=CHOICE, default="*****")
+
+    def __str__(self):
+        return str(self.hotel_to_review)

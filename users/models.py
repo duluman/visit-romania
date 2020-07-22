@@ -17,12 +17,6 @@ class MyUserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name
         )
-        # generated_password = self.make_random_password()
-        # print(f'email: {email} - password: {generated_password}')
-        #
-        # send_register_email(first_name, last_name, email, generated_password)
-        #
-        # user.set_password(generated_password)
 
         if not is_social_user:
             set_inactive_user.send(sender=settings.AUTH_USER_MODEL, user=user)
