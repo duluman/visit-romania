@@ -17,11 +17,6 @@ def activate(request, token):
     if activation.user.is_active:
         raise Http404
 
-        # if request.user.is_authenticated:
-        #     return HttpResponseRedirect(reverse('users:profile'))
-        # else:
-        #     return HttpResponseRedirect(reverse('users:login'))
-
     # token invalid
     if activation.expires_at < timezone.now():
         if request.GET.get('resend'):
@@ -31,10 +26,6 @@ def activate(request, token):
         return render(request, 'activation/activate.html', {
             'token': activation.token
         })
-
-    # token valid
-    # if request.method == 'GET':
-    #     form = SetPassword()
 
     if request.method == 'POST':
         form = SetPassword(activation.user, request.POST)

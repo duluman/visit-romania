@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpResponseRedirect
 from hotel.models import Hotel, Room, Period, CustomerReview
 from django.urls import reverse
@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import random
 from django.views.generic import UpdateView, CreateView
-# from hotel.forms import  RoomForm #HotelForm
+
 
 # Create your views here.
 
@@ -103,14 +103,15 @@ def create_review(request, hotel_id):
     return render(request, 'hotel/create_review.html')
 
 
-def submit_review(request):
+def submit_review(request, hotel_id):
     customer = request.user
     hotel_to_review = "How to get the hotel review"
-    comment = request.POST['comment']
-    stars = request.POST['stars']
-
-    print(comment)
-    print(stars)
+    # comment = request.POST['comment']
+    # stars = request.POST['stars']
+    print(hotel_id)
+    print("*** hotel name ***")
+    # print(comment)
+    # print(stars)
     print(customer)
     print(hotel_to_review)
     # for hotel in hotel_to_review:
@@ -141,6 +142,7 @@ class AddRoomPriceView(UpdateView):
     fields = ['days']
     # fields = ['days', 'seasons']
     template_name = 'hotel/update_price.html'
+
 
 @login_required
 def reservation_view(request):
