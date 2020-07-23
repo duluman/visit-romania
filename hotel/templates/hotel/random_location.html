@@ -33,19 +33,16 @@
 
         {% endif %}
 
-        <span class="badge badge-danger">
-            <i class="fas fa-sun pr-2" aria-hidden="true"></i>Discount</span>
-        <span class="badge success-color">
-            <i class="fas fa-plane pr-2" aria-hidden="true"></i>New on page</span>
-        <span class="badge badge-warning">
-            <i class="fas fa-car pr-2" aria-hidden="true"></i> Free parking </span>
+        {% for badge in badge_list %}
 
-        <span class="badge badge-info">
-            <i class="fas fa-pen pr-2" aria-hidden="true"></i>Refund 100% </span>
-        <span class="badge badge-dark">
-            <i class="fas fa-clock pr-2" aria-hidden="true"></i>Last minute </span>
+            {% if badge.hotel_k_id == rand_location.id %}
+            <span class="badge badge-{{ badge.color }}">
+            <i class="fas fa-{{ badge.icon }} pr-2" aria-hidden="true"></i>{{ badge.text }}</span>
+            {% endif %}
 
-        <!-- vreau sa las utilizatorul sa puna tag: Oferta, Reducere, Last minute-->
+        {% endfor %}
+
+
     </div>
         </div>
 
