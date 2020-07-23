@@ -1,5 +1,5 @@
 from django.contrib import admin
-from hotel.models import Hotel, Room, Period, CustomerReview, BadgeHotel
+from hotel.models import Hotel, Room, Period, CustomerReview, BadgeHotel, BestFeature
 # Register your models here.
 
 
@@ -9,12 +9,18 @@ class BadgeHotelTabularInline(admin.TabularInline):
     extra = 0
 
 
+class BestFeatureTabularInline(admin.TabularInline):
+
+    model = BestFeature
+    extra = 0
+
+
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
     list_display = ('name', 'location')
     search_fields = ['name', 'location']
 
-    inlines = [BadgeHotelTabularInline]
+    inlines = [BadgeHotelTabularInline, BestFeatureTabularInline]
 
     class Meta:
         model = Hotel

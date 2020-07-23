@@ -17,19 +17,17 @@
 <div class="row">
     {% for customer_review in review_list %}
     <!--Grid column-->
-    <div class="col-lg-2 col-md-12 mb-4">
+    <div class="col-lg-2 col-md-12 mb-4 ">
 
       <!--Card-->
       <div class="card testimonial-card">
 
         <!--Background color-->
-        <div class="card-up teal lighten-2">
+        <div class="col-md-8 mt-3">
+            <div class="avatar mx-auto white"><img src="{{ MEDIA_URL }}{{ customer_review.name.profile.avatar }}"
+                class="rounded-circle img-fluid">
+            </div>
         </div>
-
-<div class="avatar mx-auto white"><img src="{{ MEDIA_URL }}{{ customer_review.name.profile.avatar }}"
-            class="rounded-circle img-fluid">
-        </div>
-
           <div class="card-body">
           <!--Name-->
           <h4 class="card-title mt-1">{{ customer_review.name.first_name }} {{ customer_review.name.last_name }}</h4>

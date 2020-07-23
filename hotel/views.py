@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpResponseRedirect
-from hotel.models import Hotel, Room, Period, CustomerReview, BadgeHotel
+from hotel.models import Hotel, Room, Period, CustomerReview, BadgeHotel, BestFeature
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -42,11 +42,13 @@ def details(request, hotel_id):
 
         hotel = get_object_or_404(Hotel, pk=hotel_id)
         review_list = CustomerReview.objects.filter(hotel_to_review_id=hotel_id)
+        best_feature_list = BestFeature.objects.filter(hotel_feature_id=hotel_id)
 
         context = {
             "hotel": hotel,
-            "review_list": review_list
-        }
+            "review_list": review_list,
+            "best_feature_list": best_feature_list}
+
         return render(request, "hotel/details.html", context)
 
 
@@ -106,25 +108,26 @@ def create_review(request, hotel_id):
     return render(request, 'hotel/create_review.html')
 
 
-def submit_review(request, hotel_id):
-    customer = request.user
-    hotel_to_review = "How to get the hotel review"
-    # comment = request.POST['comment']
-    # stars = request.POST['stars']
-    print(hotel_id)
-    print("*** hotel name ***")
-    # print(comment)
-    # print(stars)
-    print(customer)
-    print(hotel_to_review)
-    # for hotel in hotel_to_review:
-    #     print(hotel.name)
-    return HttpResponse('Submit view review')
-    #
-    # customerreview = CustomerReview(comment=comment, stars=stars)
-    # customerreview.save()
-    # messages.success(request, 'Indeed you added a Review')
-    # return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
+# def submit_review(request, hotel_id):
+#     pass
+#     # customer = request.user
+#     hotel_to_review = "How to get the hotel review"
+#     comment = request.POST['comment']
+#     stars = request.POST['stars']
+#     print(hotel_id)
+#     print("*** hotel name ***")
+#     # print(comment)
+#     # print(stars)
+#     # print(customer)
+#     print(hotel_to_review)
+#     # for hotel in hotel_to_review:
+#     #     print(hotel.name)
+#     # return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
+#     # {% url 'hotel:submit_review' hotel_id %}
+#     customerreview = CustomerReview(comment=comment, stars=stars)
+#     customerreview.save()
+#     messages.success(request, 'Indeed you added a Review')
+#     return HttpResponseRedirect(reverse('hotel:details', args=(hotel_id,)))
 
 
 def room_view(request, hotel_id):
