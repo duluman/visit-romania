@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpResponseRedirect
-from hotel.models import Hotel, Room, Period, CustomerReview
+from hotel.models import Hotel, Room, Period, CustomerReview, BadgeHotel
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -13,7 +13,7 @@ from django.views.generic import UpdateView, CreateView
 
 def index(request):
     search_term = ''
-
+    badge_list = BadgeHotel.objects.all()
     try:
         search_term = request.POST['search_for_city']
         hotel_list = Hotel.objects.filter(location__iregex=r'^{}'.format(search_term))
@@ -22,7 +22,8 @@ def index(request):
 
     context = {
         'hotel_list': hotel_list,
-        'search_term': search_term}
+        'search_term': search_term,
+        'badge_list': badge_list}
 
     return render(request, "hotel/index.html", context)
 
@@ -30,7 +31,9 @@ def index(request):
 def random_hotel(request):
     hotel_list = Hotel.objects.all()
     magician = random.choice(hotel_list)
-    context = {'rand_location': magician}
+    badge_list = BadgeHotel.objects.all()
+    context = {'rand_location': magician,
+               'badge_list': badge_list}
 
     return render(request, "hotel/random_location.html", context)
 

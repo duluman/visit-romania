@@ -21,6 +21,50 @@ class Hotel(models.Model):
         return self.name
 
 
+class BadgeHotel(models.Model):
+    hotel_k = models.ForeignKey(Hotel, on_delete=models.CASCADE, default=None)
+    ICON_CHOICES = [("camera-retro", "camera-retro"),
+                    ("heart", "heart"),
+                    ("brain", "brain"),
+                    ("calendar-check", "calendar-check"),
+                    ("pen", "pen"),
+                    ("eye", "eye"),
+                    ("car", "car"),
+                    ("plane", "plane"),
+                    ("hotel", "hotel"),
+                    ("key", "key"),
+                    ("sun", "sun"),
+                    ("music", "music"),
+                    ("clock", "clock"),
+                    ("user-check", "user-check"),
+                    ("yin-yang", "yin-yang")]
+
+    icon = models.CharField(
+        max_length=100,
+        choices=ICON_CHOICES,
+        default=None,
+        blank=True)
+
+    text = models.CharField(max_length=255, default="new feature", blank=True, null=True)
+
+    COLOR_CHOICE = [("info", "cyan"),
+                    ("danger", "red"),
+                    ("success", "green"),
+                    ("warning", "amber"),
+                    ("black", "black")]
+
+    color = models.CharField(
+        max_length=100,
+        choices=COLOR_CHOICE,
+        default=None,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return self.icon
+
+
 class Room(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=100, default=None)
