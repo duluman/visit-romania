@@ -50,5 +50,8 @@ class Profile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='profile_images/')
 
+    def __str__(self):
+        return str(self.user)
+
 
 

@@ -253,3 +253,6 @@ class CustomerReview(models.Model):
 
     def __str__(self):
         return str(self.hotel_to_review)
+
+    def get_absolute_url(self):
+        return reverse('hotel:list')

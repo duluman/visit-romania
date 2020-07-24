@@ -4,21 +4,27 @@
 {% block content%}
 
 
-    <h3>Add Review </h3>
+    <h3>Add Review | it is not working     d|-_-|b </h3>
+<br>
 
     <form  action = "" method="post" class="col-md-4 mb-5" >
         {% csrf_token %}
 
-        <!--<label >Customer</label>-->
-        <!--<div class="col-md-4 mb-5">-->
+        <label >Customer: {{request.user.first_name}}{{request.user.last_name}}</label>
+        <div class="col-md-4 mb-5">
             <!--<input type="text" name="customer" />-->
-        <!--</div>-->
+            <!--<select customer="customer" />-->
+            <!--<input  type="checkbox" list="customer" />-->
+            <select name="customer">
+                <option>{{request.user.email}}</option>
+            </select>
+        </div>
 
-        <!--<label>Hotel Review</label>-->
-        <!--<div class="col-md-4 mb-5">-->
+        <label>Hotel Review</label>
+        <div class="col-md-4 mb-5">
 
-            <!--<input type="text" name="hotel_to_review"/>-->
-        <!--</div>-->
+            <input type="text" name="hotel_to_review"/>
+        </div>
 
         <label>Comment</label>
         <div class="col-md-4 mb-5">

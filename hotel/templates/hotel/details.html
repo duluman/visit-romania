@@ -91,11 +91,21 @@
 </div>
 <hr>
  <br>
-<div class="row align-items-center">
-<div class="col-md-1">
-    <a class="btn btn-green"  href="{% url 'hotel:create_review' hotel.id  %}"> Add review</a>
-    </div>
 
+<div class="row align-items-center">
+    {% if user.is_authenticated %}
+<div class="col-md-1">
+    <a class="btn btn-green"  href="{% url 'hotel:create_review' hotel.id  %}"> Create review</a>
+    </div>
+<div class="col-md-1">
+    <a class="btn btn-red"  href="{% url 'hotel:review'  %}"> Add review</a>
+    </div>
+{% else %}
+    <div class="col-md-1">
+<p style="text-align:justify">If you want to leave a review, please login
+    <a href="{% url 'users:login' %}">here</a></p>
+    </div>
+{% endif%}
 {% for customer_review in review_list %}
     <div class="col-md-1">
         <div class="avatar mx-auto white"><img src="{{ MEDIA_URL }}{{ customer_review.customer.profile.avatar }}"
