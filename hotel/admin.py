@@ -86,6 +86,11 @@ class RoomAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
-admin.site.register(CustomerReview)
+@admin.register(CustomerReview)
+class CustomerReviewAdmin(admin.ModelAdmin):
+    list_display = ('customer', 'hotel_to_review', 'date', 'stars')
+
+    class Meta:
+        model = CustomerReview
 
 

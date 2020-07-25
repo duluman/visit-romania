@@ -7,8 +7,9 @@ from review.models import AppReview
 
 @admin.register(AppReview)
 class AppReviewAdmin(admin.ModelAdmin):
-    list_display = ('name', 'stars')
+    list_display = ('name', 'stars', 'date')
     search_fields = ['name']
+    list_filter = ('name',)# because the list_filter must be tuple or list
 
     class Meta:
         model = AppReview

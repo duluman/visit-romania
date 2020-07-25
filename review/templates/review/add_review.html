@@ -3,6 +3,9 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
+    <h4>Dear, {{request.user.first_name}} {{request.user.last_name}}</h4>
+
+<h4>To create a review of this app, please fill out the form below:</h4>
 
     <form method="POST" class="p5 grey-text col-md-8">
 

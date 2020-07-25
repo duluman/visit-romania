@@ -11,7 +11,7 @@ from hotel.views import (index,
                          AddRoomPriceView,
                          reservation_view,
                          AddRoom,
-                         create_review,
+                         # create_review,
                          AddHotelReview
                          # submit_review
                          )
@@ -26,7 +26,7 @@ urlpatterns = [
     path('submit', view=submit, name='submit'),
     path('delete/<int:hotel_id>', view=delete, name='delete'),
     path('update/<int:hotel_id>', view=update, name='update'),
-    path('<int:hotel_id>/create_review/', view=create_review, name='create_review'),
+    # path('<int:hotel_id>/create_review/', view=create_review, name='create_review'),
     # path('submit_review/', view=submit_review, name='submit_review'),
     path('success', view=success, name='success'),
     path('<int:hotel_id>/room/', view=room_view, name='room'),
