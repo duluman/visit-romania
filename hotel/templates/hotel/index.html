@@ -3,6 +3,7 @@
 
 
     {% block hotel %}
+
         {% for hotel in hotel_list %}
             <div class="col-lg-4 col-md-4 mb-2">
 
@@ -54,9 +55,14 @@
             </div>
 
         {% endfor %}
-
-
-
+ <div class="col-lg-4 col-md-4 mb-2">
+<h4> On this website there are {{ hotel_count }} hotels</h4>
+<br>
+<p>You have visited this page {{ num_visits }}
+    {% if num_visits == 1 %} time
+    {% else %} times
+    {% endif %}.</p>
+ </div>
     {% endblock hotel %}
 
 

@@ -2,9 +2,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content%}
-<h4>Dear, {{request.user.first_name}} {{request.user.last_name}}</h4>
+
+<h4>Dear, {{ request.user.first_name }} {{ request.user.last_name }}</h4>
 <br>
-<h4>Create here a new review for your hotel</h4>
+<h4>Create here a new review</h4>
 <div class="col-lg-4 col-md-4 mb-2">
 <form method="post">
     {% csrf_token %}
@@ -13,4 +14,5 @@
 </form>
 
 </div>
+
 {% endblock content%}
