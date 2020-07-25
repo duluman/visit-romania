@@ -88,13 +88,22 @@
     <h1>  <i class="fas fa-star mr-1 " ></i> View Rooms </h1></a>
 
     <br>
+        {% if user.is_authenticated %}
+
+<div class="col-md-1">
+    <a class="btn btn-red"  href="{% url 'hotel:review'  %}"> Add review</a>
+    </div>
+{% else %}
+    <div class="col-md-1">
+<p style="text-align:justify">If you want to leave a review, please login
+    <a href="{% url 'users:login' %}">here</a></p>
+    </div>
+{% endif%}
 </div>
 <hr>
  <br>
+
 <div class="row align-items-center">
-<div class="col-md-1">
-    <a class="btn btn-green"  href="{% url 'hotel:create_review' hotel.id  %}"> Add review</a>
-    </div>
 
 {% for customer_review in review_list %}
     <div class="col-md-1">

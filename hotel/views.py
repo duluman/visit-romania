@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpResponseRedirect
 from hotel.models import Hotel, Room, Period, CustomerReview, BadgeHotel, BestFeature
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import random
@@ -109,6 +109,26 @@ def create_review(request, hotel_id):
 
 
 # def submit_review(request, hotel_id):
+#
+#     # customer = request.user
+#     hotel_to_review = Hotel.objects.filter(hotel_id=hotel_id)
+#     # hotel_to_review = get_object_or_404(Hotel, pk=hotel_id)
+#     # hotel_to_review = request.POST['hotel_to_review']
+#     # hotel_to_review = request.get['hotel_id':hotel_id]
+#     comment = request.POST['comment']
+#     stars = request.POST['stars']
+#     { % url    'hotel:submit_review'    hotel_id %}
+#     print("*** hotel name ***")
+#     # print(hotel_to_review)
+#     print("*** hotel name ***")
+#
+#     # {% url 'hotel:submit_review' hotel_id %}
+#     customerreview = CustomerReview(hotel_to_review= hotel_to_review, comment=comment, stars=stars)
+#     customerreview.save()
+#     messages.success(request, 'Indeed you added a Review')
+#     return HttpResponseRedirect(reverse('hotel:list'))
+
+# def submit_review(request, hotel_id):
 #     pass
 #     # customer = request.user
 #     hotel_to_review = "How to get the hotel review"
@@ -170,3 +190,16 @@ class AddRoom(CreateView):
     template_name = 'hotel/room_add.html'
 
 
+class AddHotelReview(CreateView):
+    model = CustomerReview
+    fields = "__all__"
+    # fields = ["hotel_to_review", "comment", "stars"]
+    template_name = "hotel/add_review.html"
+    # get_absolute_url = reverse_lazy('hotel:list')
+    # get_absolute_url = reverse('hotel:list')
+
+
+    # def get_queryset(self):
+    #     queryset = super(AddHotelReview, self).get_queryset()
+    #     queryset = queryset.objects.filter(customer=self.request.user)
+    #     return queryset
