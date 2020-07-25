@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import random
 from django.views.generic import UpdateView, CreateView
-
+from django.utils.decorators import method_decorator
+# from hotel.forms import AddHotelReviewForm
 
 # Create your views here.
 
@@ -14,6 +15,10 @@ from django.views.generic import UpdateView, CreateView
 def index(request):
     search_term = ''
     badge_list = BadgeHotel.objects.all()
+    number_of_hotels = Hotel.objects.all().count()
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
     try:
         search_term = request.POST['search_for_city']
         hotel_list = Hotel.objects.filter(location__iregex=r'^{}'.format(search_term))
@@ -23,7 +28,9 @@ def index(request):
     context = {
         'hotel_list': hotel_list,
         'search_term': search_term,
-        'badge_list': badge_list}
+        'badge_list': badge_list,
+        'hotel_count': number_of_hotels,
+        'num_visits': num_visits}
 
     return render(request, "hotel/index.html", context)
 
@@ -104,8 +111,8 @@ def success(request):
     return HttpResponse('successfully uploaded')
 
 
-def create_review(request, hotel_id):
-    return render(request, 'hotel/create_review.html')
+# def create_review(request, hotel_id):
+#     return render(request, 'hotel/create_review.html')
 
 
 # def submit_review(request, hotel_id):
@@ -163,6 +170,7 @@ def room_view(request, hotel_id):
     return render(request, "hotel/room.html", context)
 
 
+@method_decorator(login_required, name='dispatch')
 class AddRoomPriceView(UpdateView):
     model = Period
     fields = ['days']
@@ -184,22 +192,39 @@ def reservation_view(request):
     return render(request, template, context)
 
 
+@method_decorator(login_required, name='dispatch')
 class AddRoom(CreateView):
     model = Room
     fields = '__all__'
     template_name = 'hotel/room_add.html'
 
+    # def get_initial(self):
+    #     initial = super(AddRoom, self).get_initial()
+    #     print("$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$")
+    #     print(self.request.user)
+    #     print(initial)
+    #     print("$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$-$")
+    #     initial['customer'] = self.request.user
 
+
+@method_decorator(login_required, name='dispatch')
 class AddHotelReview(CreateView):
     model = CustomerReview
-    fields = "__all__"
-    # fields = ["hotel_to_review", "comment", "stars"]
+    # fields = "__all__"
+    fields = ["hotel_to_review", "comment", "stars"]
     template_name = "hotel/add_review.html"
-    # get_absolute_url = reverse_lazy('hotel:list')
-    # get_absolute_url = reverse('hotel:list')
+
+    def get_initial(self):
+        initial = super(AddHotelReview, self).get_initial()
+        print(self.request.user)
+        initial['customer'] = self.request.user
+
+        return initial
+
+    def form_valid(self, form):
+        form.instance.customer = self.request.user
+
+        return super(AddHotelReview, self).form_valid(form)
 
 
-    # def get_queryset(self):
-    #     queryset = super(AddHotelReview, self).get_queryset()
-    #     queryset = queryset.objects.filter(customer=self.request.user)
-    #     return queryset
+
