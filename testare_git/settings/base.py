@@ -15,7 +15,9 @@ from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+# BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -99,6 +101,7 @@ DATABASES = {
         'NAME': config('DB_NAME', 'local_db_name'),
         'USER': config('DB_USER', 'root'),
         'PASSWORD': config('DB_PASSWORD', 'root'),
+        'OPTIONS': {'sql_mode': 'STRICT_ALL_TABLES'}
     }
 }
 
@@ -140,14 +143,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 
 AUTH_USER_MODEL = 'users.MyUser'
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:profile'
 
-MEDIA_ROOT = 'media/'
+
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -166,6 +170,8 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend')
+
+DJANGO_AUTH_BACKEND = 'django.contrib.auth.backends.ModelBackend'
 
 SOCIAL_AUTH_USER_FIELDS = ['email', 'first_name', 'last_name']
 
