@@ -25,7 +25,7 @@ def handle_login(request):
             user = authenticate(request, username=email, password=password)
 
             if user is not None:
-                login(request, user)
+                login(request, user, backend=settings.DJANGO_AUTH_BACKEND)
                 return HttpResponseRedirect(reverse('users:profile'))
     else:
         form = LoginForm()
@@ -64,6 +64,17 @@ def profile(request):
 
 @login_required
 def profile_email(request):
+    if settings.IS_PRODUCTION:
+        avatar_path = '{MEDIA_ROOT}/{PROFILE_IMAGE}'.format(
+            MEDIA_ROOT=settings.MEDIA_ROOT,
+            PROFILE_IMAGE=request.user.profile.avatar)
+
+    else:
+        avatar_path = '{BASE_DIR}/{MEDIA_ROOT}/{PROFILE_IMAGE}'.format(
+            BASE_DIR=settings.BASE_DIR,
+            MEDIA_ROOT=settings.MEDIA_ROOT,
+            PROFILE_IMAGE=request.user.profile.avatar)
+
     remote_address = request.META.get('REMOTE_ADDR')
     email_template = get_template('users/email.html')
     email_content = email_template.render(
@@ -82,10 +93,9 @@ def profile_email(request):
         [request.user.email])
 
     mail.content_subtype = 'html'
-    mail.attach_file('{BASE_DIR}/{MEDIA_ROOT}/{PROFILE_IMAGE}'.format(
-        BASE_DIR=settings.BASE_DIR,
-        MEDIA_ROOT=settings.MEDIA_ROOT,
-        PROFILE_IMAGE=request.user.profile.avatar))
+
+    mail.attach_file(avatar_path)
+
     mail.send()
 
     return HttpResponseRedirect(reverse('users:profile'))

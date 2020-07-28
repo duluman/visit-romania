@@ -5,7 +5,7 @@ from django.utils import timezone
 from activation.helpers.utils import regenerate_activation
 from users.forms import SetPassword
 from django.contrib.auth import authenticate, login
-
+from django.conf import settings
 # Create your views here.
 
 
@@ -42,7 +42,7 @@ def activate(request, token):
             password = user_with_password.password
 
             authenticate_user = authenticate(request, username=email, password=password)
-            login(request, authenticate_user) #, backend='django.contrib.auth.backends.ModelBackend'
+            login(request, authenticate_user, backend=settings.DJANGO_AUTH_BACKEND) #, backend='django.contrib.auth.backends.ModelBackend'
             return HttpResponseRedirect(request, 'users:profile')
     else:
         form = SetPassword(activation.user)
