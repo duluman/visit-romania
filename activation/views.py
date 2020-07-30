@@ -39,11 +39,11 @@ def activate(request, token):
             activation.save()
 
             email = user_with_password.email
-            password = user_with_password.password
-
+            # password = user_with_password.password
+            password = form.cleaned_data['password']
             authenticate_user = authenticate(request, username=email, password=password)
-            login(request, authenticate_user, backend=settings.DJANGO_AUTH_BACKEND) #, backend='django.contrib.auth.backends.ModelBackend'
-            return HttpResponseRedirect(request, 'users:profile')
+            login(request, authenticate_user) #, backend='django.contrib.auth.backends.ModelBackend'
+            return HttpResponseRedirect(reverse('users:profile'))
     else:
         form = SetPassword(activation.user)
 

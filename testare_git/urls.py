@@ -25,7 +25,7 @@ admin.site.site_title = " Admin "
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin_view'),
     path('', view=home_page),
     path('read_more/', view=read_more),
     path('hotel/', include("hotel.urls")),
@@ -35,3 +35,7 @@ urlpatterns = [
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('payments/', include("payments.urls"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
