@@ -120,42 +120,45 @@ def register(request):
 
 
 def contact_view(request):
+    if request.method == 'POST':
 
-    form = ContactForm(request.POST)
+        form = ContactForm(request.POST)
 
-    if form.is_valid():
+        if form.is_valid():
 
-        first_name = form.cleaned_data['first_name']
-        last_name = form.cleaned_data['last_name']
-        email = form.cleaned_data['email']
-        mobile = form.cleaned_data['mobile']
-        subject = form.cleaned_data['subject']
-        message = form.cleaned_data['message']
-        email_template = get_template('users/contact_email_send.html')
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            mobile = form.cleaned_data['mobile']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            email_template = get_template('users/contact_email_send.html')
 
-        email_content = email_template.render(
-            {
+            email_content = email_template.render(
+                {
 
-                'first_name': first_name,
-                'last_name': last_name,
-                'email': email,
-                'mobile': mobile,
-                'subject': subject,
-                'message': message,
-            }
-        )
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'email': email,
+                    'mobile': mobile,
+                    'subject': subject,
+                    'message': message,
+                }
+            )
 
-        mail = EmailMultiAlternatives(
-            f'Visit Romania:{subject}',
-            email_content,
-            settings.EMAIL_HOST_USER,
-            [email],
-            (settings.EMAIL_HOST_USER, )
-        )
-        mail.content_subtype = 'html'
-        mail.send()
+            mail = EmailMultiAlternatives(
+                f'Visit Romania:{subject}',
+                email_content,
+                settings.EMAIL_HOST_USER,
+                [email],
+                (settings.EMAIL_HOST_USER, )
+            )
+            mail.content_subtype = 'html'
+            mail.send()
 
-        return HttpResponseRedirect(reverse('users:contact'))
+            return HttpResponseRedirect(reverse('users:contact'))
+    else:
+        form = ContactForm()
 
     return render(request, "users/contact.html", {'form': form})
 
