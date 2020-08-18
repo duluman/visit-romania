@@ -1,47 +1,6 @@
 from django import forms
 from users.models import MyUser, Profile
 from django.contrib.auth import password_validation
-# from activation.signals import set_inactive_user
-# from django.conf import settings
-# from django.contrib.auth.forms import PasswordResetForm
-
-# class MyUserCreationForm(forms.ModelForm):
-#     class Meta:
-#         model = MyUser
-#         fields = ['first_name', 'last_name', 'email']
-#
-#     password1 = None
-#     password2 = None
-#
-#     def clean_password2(self):
-#         pass
-#
-#     def _post_clean(self):
-#         pass
-#
-#     # def save(self, commit=True):
-#     #     first_name = self.cleaned_data['first_name']
-#     #     last_name = self.cleaned_data['last_name']
-#     #     email = self.cleaned_data['email']
-#     #     user = MyUser.objects.create_user(email, first_name, last_name)
-#     #     return user
-#
-#     def save(self, commit=True):
-#         user = super(forms.ModelForm, self).save(commit=False)
-#         email = self.cleaned_data.get('email')
-#         first_name = self.cleaned_data.get('first_name')
-#         last_name = self.cleaned_data.get('last_name')
-#
-#         user.email = email
-#         user.first_name = first_name
-#         user.last_name = last_name
-#         set_inactive_user.send(sender=settings.AUTH_USER_MODEL, user=user)
-#         if commit:
-#
-#             user.save()
-#         # user = MyUser.objects.create_user(email, first_name, last_name)
-#
-#         return user
 
 
 class LoginForm(forms.Form):
