@@ -1,0 +1,24 @@
+{% extends "adoptions/starter_template.html" %}
+{% load static %}
+
+
+{% block starter %}
+
+        <div class="row">
+            {% for pet in pets %}
+                <div class="col">
+                    <h4><a href="{% url 'adoptions:pet' pet.id %}">
+                        {{ pet.name | capfirst }}
+                    </a></h4>
+
+
+                    {% if pet.breed %}
+                        <p> Breed: {{ pet.breed }} </p>
+                    {% endif %}
+                    <p> Species: {{ pet.species }} </p>
+
+                </div>
+            {% endfor %}
+        </div>
+
+{% endblock starter %}

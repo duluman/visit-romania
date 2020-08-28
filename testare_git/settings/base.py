@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'activation',
     'crispy_forms',
     'payments',
+    'adoptions',
+    'jobs',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

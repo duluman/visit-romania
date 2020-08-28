@@ -1,0 +1,34 @@
+{% extends "adoptions/starter_template.html" %}
+{% load static %}
+
+
+{% block starter %}
+
+<br>
+<div class="container">
+    <h3> {{ pet.name | capfirst }}</h3>
+    <p> {{ pet.species }}</p>
+    {% if pet.breed %}
+        <p> {{ pet.breed }} </p>
+    {% endif %}
+
+
+    {% if pet.sex %}
+        <p> {{ pet.sex }} </p>
+    {% endif %}
+
+
+    {% if pet.vaccinations.all %}
+        {% for vaccination in pet.vaccinations.all %}
+            <p>Vaccination: {{ vaccination.name }} </p>
+        {% endfor %}
+    {% endif %}
+
+    <p>Submitted by: {{ pet.submitter }}</p>
+    <p>Submitted on: {{ pet.submission_date | date:"d M Y" }}</p>
+
+    <p>Description: {{ pet.description }}</p>
+</div>
+
+
+{% endblock starter %}
